@@ -295,17 +295,18 @@ class HelloWorldApp {
 }
 ~~~
 
-####main方法(main Method)
+###main方法(main Method)
 每个Java应用程序==必须有且只能有的一个main方法，它是程序执行的入口，运行时被虚拟机自动执行==
 
-- main方法的声明格式是固定的，<br>
- main方法必须声明为public<br>
- main的参数必须为String对象的数组<br>
- main方法必须为static<br>
+#### main方法的声明格式是固定的，
+- main方法必须声明为public
+- main的参数必须为String对象的数组
+- main方法必须为static
 
-- 类的名字必须和文件名相同。
+#### 类的名字必须和文件名相同。
 
-- 文件中必须存在某个类与该文件同名，且这个类必须包含一个名为__main()__的方法
+#### 文件中必须存在某个类与该文件同名，
+- 且这个类必须包含一个名为__main()__的方法
 
 ###Return关键字：
 
@@ -383,8 +384,10 @@ public修饰的类名称必须与包含它的Java源程序文件名一致<br>
 - Java参考大全J2SE 
 - Core Java 2
 
-- J2SE 说明文档
-<http://java.sun.com/javase/6/docs>
+- JDK1.7版的Java核心API文档<http://docs.oracle.com/javase/7/docs/api>
+
+<!--J2SE 说明文档 http://java.sun.com/javase/6/docs-->
+
 
 ###搜索引擎
 - Google
@@ -392,10 +395,12 @@ public修饰的类名称必须与包含它的Java源程序文件名一致<br>
 - bing
 
 ###Java技术论坛
+- <http://docs.oracle.com/javase/index.html>
 - <http://www.javaworld.com>
 - <http://www.javaeye.com>
 - <http://www.csdn.net>
 
+- <https://github.com>
 
 
 ####马士兵java视频教程
