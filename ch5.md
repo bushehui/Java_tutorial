@@ -2,9 +2,9 @@
 title: Java语言输入/输出
 ---
 
-#输入/输出流
-
 [TOC]
+
+#输入/输出流
 
 ##输入/输出流概述
 
@@ -36,7 +36,7 @@ Jdk提供了包__java.io__，其中包括一系列的类来实现输入/输出�
 ![输出流](fig/iostreamoutput.png)
 
 Java有各种各样的执行I/O的流，在java.io包中定义了这些流，其层次结构图如图所示。
-![](fig/iolevel.jpg)
+![](fig/iolevel.png)
 
 编写程序时，java.io包必须被执行输入输出的程序导入。
 
@@ -526,6 +526,93 @@ public void write(int b) throws IOException
 b是int类型时，占用4个字节，只有最低的一个字节被写入输出流，忽略其余字节。
 
 
+__实例__
+
+下面是一个演示InputStream和OutputStream用法的例子：
+
+~~~java
+import java.io.*;
+
+public class fileStreamTest{
+
+   public static void main(String args[]){
+   
+   try{
+      byte bWrite [] = {11,21,3,40,5};
+      OutputStream os = new FileOutputStream("test.txt");
+      for(int x=0; x < bWrite.length ; x++){
+         os.write( bWrite[x] ); // writes the bytes
+      }
+      os.close();
+     
+      InputStream is = new FileInputStream("test.txt");
+      int size = is.available();
+
+      for(int i=0; i< size; i++){
+         System.out.print((char)is.read() + "  ");
+      }
+      is.close();
+   }catch(IOException e){
+      System.out.print("Exception");
+   }	
+   }
+}
+~~~
+
+以上代码由于是二进制写入，可能存在乱码，你可以使用以下代码实例来解决乱码问题：
+
+~~~java
+//文件名 :fileStreamTest2.java
+import java.io.*;
+
+public class fileStreamTest2{
+	public static void main(String[] args) throws IOException {
+		
+		File f = new File("a.txt");
+		FileOutputStream fop = new FileOutputStream(f);
+		// 构建FileOutputStream对象,文件不存在会自动新建
+		
+		OutputStreamWriter writer = new OutputStreamWriter(fop, "UTF-8");
+		// 构建OutputStreamWriter对象,参数可以指定编码,默认为操作系统默认编码,windows上是gbk
+		
+		writer.append("中文输入");
+		// 写入到缓冲区
+		
+		writer.append("\r\n");
+		//换行
+		
+		writer.append("English");
+		// 刷新缓存冲,写入到文件,如果下面已经没有写入的内容了,直接close也会写入
+		
+		writer.close();
+		//关闭写入流,同时会把缓冲区内容写入文件,所以上面的注释掉
+		
+		fop.close();
+		// 关闭输出流,释放系统资源
+
+		FileInputStream fip = new FileInputStream(f);
+		// 构建FileInputStream对象
+		
+		InputStreamReader reader = new InputStreamReader(fip, "UTF-8");
+		// 构建InputStreamReader对象,编码与写入相同
+
+		StringBuffer sb = new StringBuffer();
+		while (reader.ready()) {
+			sb.append((char) reader.read());
+			// 转成char加到StringBuffer对象中
+		}
+		System.out.println(sb.toString());
+		reader.close();
+		// 关闭读取流
+		
+		fip.close();
+		// 关闭输入流,释放系统资源
+
+	}
+}
+~~~
+
+
 ###RandomAccessFile
 
 RandomAccessFile类提供了一种称为“随机访问文件”方式，可以：
@@ -697,10 +784,20 @@ FileInputStream fi=new FileInputStream("data.ser");
 
 #异常处理
 
+
 ##什么是异常
 
 - 异常就是在程序的运行过程中所发生的意外事件，它中断指令的正常执行。
 - Java中提供了一种独特的处理异常的机制，通过异常来处理程序设计中出现的异常。
+
+异常发生的原因有很多，通常包含以下几大类：
+
+- 用户输入了非法数据。
+- 要打开的文件不存在。
+- 网络通信时连接中断，或者JVM内存溢出。
+
+这些异常有的是因为用户错误引起，有的是程序错误引起的，还有其它一些是因为物理错误引起的。
+
 
 ##为何使用异常处理
 
@@ -794,25 +891,35 @@ readFile {//结构清楚，无需自己判断，代码量小。
 
 ##异常类的层次结构
 
-在jdk中，每个包中都定义了异常类，而所有的异常类都直接或间接地继承于java.lang.Throwable类。
+在Java语言中，每个包中都定义了异常类，而所有的异常类都直接或间接地继承于java.lang.Throwable类。
 
 当Java程序遇到不可预料的错误时，会实例化一个从Throwable类继承的对象。 
 
-![](fig/Error.png)
+标准运行时异常类的子类是最常见的异常类。由于java.lang包是默认加载到所有的Java程序的，所以大部分从运行时异常类继承而来的异常都可以直接使用。
 
-- Error:<br>
-错误Error类指的是系统错误或运行环境出现的错误，这些错误一般是很严重的错误，即使捕捉到也无法处理，由Java虚拟机生成并抛出，包括系统崩溃、动态链接失败、虚拟机错误等，在Java程序中不做处理。 
-- Exception:<br> 
+![](fig/classError.png)
+
+<!---![](fig/ExceptionLayers.jpg)--->
+
+###Error
+错误Error类指的是系统错误或运行环境出现的错误，这些错误一般是很严重的错误，即使捕捉到也无法处理(错误不是异常，而是脱离程序员控制的问题; 错误在代码中通常被忽略)，由Java虚拟机生成并抛出，包括系统崩溃、动态链接失败、虚拟机错误等，在Java程序中不做处理。 
+例如，当栈溢出时，一个错误就发生了，它们在编译也检查不到的。
+
+###Exception 
 异常Exception类则是指一些可以被捕获且可能恢复的异常情况，是一般程序中可预知的问题。
 
 异常可分为两类：
 
-- (1) 运行时异常：由系统检测, 用户的Java程序中可以不做处理，系统将它们交给缺省的异常处理程序
+- (1) 运行时异常：运行时异常是可能被程序员避免的异常。在编译时被忽略,运行时由系统检测, 用户的Java程序中可以不做处理，系统将它们交给缺省的异常处理程序
 - (2) 非运行时异常：在程序中必须对其进行处理，否则编译器会指出错误。 
 
-![](fig/classError.png)
+- __检查性异常__：最具代表的检查性异常是用户错误或问题引起的异常，这是程序员无法预见的。例如要打开一个不存在文件时，一个异常就发生了，这些异常在编译时不能被简单地忽略。
 
-##Exception类的构造方法
+异常类有两个主要的子类：__IOException__类和__RuntimeException__类。
+
+![](fig/Error.png)
+
+####Exception类的构造方法
 
 Exception类有两种构造方法：
 
@@ -825,12 +932,16 @@ Exception类有两种构造方法：
 Exception myExp=new Exception(“异常！”);
 ~~~
 
-##常用方法
+####常用方法
 Exception类的方法均继承自Throwable类，可以为程序提供一些有关异常的信息，常用方法如下：
 
-- String getMessage() ：返回该异常所存储的描述性字符串。
-- String toString()：返回异常对象的详细信息，包含该类名和指出所发生问题的描述性消息的字符串。
-- void printStackTrace()：将异常发生的路径，即引起异常的方法调用嵌套序列打印到标准错误流。
+- String getMessage() ：返回该异常所存储的描述性字符串，即返回关于发生的异常的详细信息。这个消息在Throwable 类的构造函数中初始化了。
+- String toString()：返回异常对象的详细信息，包含该类名和指出所发生问题的描述性消息的字符串（使用getMessage()的结果返回类的串级名字）。
+- void printStackTrace()：将异常发生的路径，即引起异常的方法调用嵌套序列打印到标准错误流（错误输出流）。
+- public Throwable getCause()： 返回一个Throwable 对象代表异常原因。
+- public StackTraceElement [] getStackTrace() ：返回一个包含堆栈层次的数组。下标为0的元素代表栈顶，最后一个元素代表方法调用堆栈的栈底。
+- public Throwable fillInStackTrace()： 用当前的调用栈层次填充Throwable 对象栈层次，添加到栈层次任何先前信息中。
+
 
 例如：
 
@@ -841,9 +952,9 @@ System.out.println(myExp.getMessage());
 此语句可以将异常对象myExp的异常信息描述打印输出，在屏幕上显示“异常！”。 
 
 
-##自定义异常类
+####自定义异常类
 
-在程序中，可以创建自定义的异常类。
+在Java程序中，可以创建自定义的异常类。
 
 - 用户定义的异常必须继承自Throwable或Exception类,建议用Exception类.
 - 用户定义的异常同样要用try--catch捕获,但必须由用户自己抛出 throw new MyException.
@@ -866,6 +977,26 @@ class MyException extends Exception {
    MyException(String exp) {
 		super(exp);
 	}
+}
+~~~
+
+__实例__
+
+~~~java
+// 文件名InsufficientFundsException.java
+import java.io.*;
+
+public class InsufficientFundsException extends Exception
+{
+   private double amount;
+   public InsufficientFundsException(double amount)
+   {
+      this.amount = amount;
+   } 
+   public double getAmount()
+   {
+      return amount;
+   }
 }
 ~~~
 
@@ -911,6 +1042,28 @@ finally {
 }
 ~~~
 
+__实例__
+
+下面的例子中声明有两个元素的一个数组，当代码试图访问数组的第三个元素的时候就会抛出一个异常。
+
+~~~java
+// 文件名 : ExcepTest.java
+import java.io.*;
+public class ExcepTest{
+
+   public static void main(String args[]){
+      try{
+         int a[] = new int[2];
+         System.out.println("Access element three :" + a[3]);
+      }catch(ArrayIndexOutOfBoundsException e){
+         System.out.println("Exception thrown  :" + e);
+      }
+      System.out.println("Out of the block");
+   }
+}
+~~~
+
+
 
 ####try
 捕获异常的第一步是用try{…}选定捕获异常的范围，try模块中的语句是程序正常流程要执行的语句，但是在执行过程中有可能出现异常。所有可能抛出异常的语句都放入try模块中。
@@ -937,9 +1090,69 @@ catch语句的顺序：<br>
 捕获异常的顺序和catch语句的顺序有关，当捕获到一个异常时，剩下的catch语句就不再进行匹配。<br>
 因此，在安排catch语句的顺序时，首先应该捕获最特殊的异常，然后再逐渐一般化。也就是一般先安排子类，再安排父类。
 
+__实例__
+
+~~~java
+try
+{
+   file = new FileInputStream(fileName);
+   x = (byte) file.read();
+}catch(IOException i)
+{
+   i.printStackTrace();
+   return -1;
+}catch(FileNotFoundException f) //Not valid!
+{
+   f.printStackTrace();
+   return -1;
+}
+~~~
+
+
 ####finally(可选)
 捕获异常的最后一步是通过finally语句为异常处理提供一个统一的出口，使得在控制流转到程序的其它部分以前，能够对程序的状态作统一的管理。<br>
 不论在try代码块中是否发生了异常事件，finally块中的语句都会被执行。
+~~~java
+try{
+    // 程序代码
+ }catch(异常类型1 异常的变量名1){
+    // 程序代码
+ }catch(异常类型2 异常的变量名2){
+    // 程序代码
+ }finally{
+    // 程序代码
+ }
+~~~
+
+__实例__
+
+~~~java
+public class ExcepTest{
+
+   public static void main(String args[]){
+      int a[] = new int[2];
+      try{
+         System.out.println("Access element three :" + a[3]);
+      }catch(ArrayIndexOutOfBoundsException e){
+         System.out.println("Exception thrown  :" + e);
+      }
+      finally{
+         a[0] = 6;
+         System.out.println("First element value: " +a[0]);
+         System.out.println("The finally statement is executed");
+      }
+   }
+} 
+~~~
+
+注意下面事项：
+
+- catch不能独立于try存在。
+- 在try/catch后面添加finally块并非强制性要求的。
+- try代码后不能既没catch块也没finally块。
+- try, catch, finally块之间不能添加任何代码。
+
+
 ###常见的异常
 
 - ArithmeticException
@@ -1011,6 +1224,40 @@ public static void main(String args[])
 
 }
 ~~~
+
+
+下面方法的声明抛出一个RemoteException异常：
+
+~~~java
+import java.io.*;
+public class className
+{
+   public void deposit(double amount) throws RemoteException
+   {
+      // Method implementation
+      throw new RemoteException();
+   }
+   //Remainder of class definition
+}
+~~~
+
+一个方法可以声明抛出多个异常，多个异常之间用逗号隔开。
+
+例如，下面的方法声明抛出RemoteException和InsufficientFundsException：
+
+~~~java
+import java.io.*;
+public class className
+{
+   public void withdraw(double amount) throws RemoteException,
+                              InsufficientFundsException
+   {
+       // Method implementation
+   }
+   //Remainder of class definition
+}
+~~~
+
 
 
 ###对异常处理的进一步讨论

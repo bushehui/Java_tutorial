@@ -2,9 +2,9 @@
 title: Java 语言编程基础
 ---
 
-#程序
-
 [TOC]
+
+#程序
 
 - 程序表现为完成某个功能(目标)而编写的指令集合。
 - 构成程序的基本元结构是__顺序__、__分支__和__循环__<br>
@@ -1193,8 +1193,457 @@ sudo apt-get install ntfs-3g ntfs-config
 -->
 
 
+#正则表达式
+
+- 正则表达式是一个特殊的字符序列，有助于你用一种专门的语法模式来匹配或找到其他字符串或字符串集。
+一个正则表达式就是由普通的字符（例如字符a到z）以及特殊字符（元字符）组成的文字模式，用以描述在查找文字主体时待匹配的一个或多个字符串。
+- 正则表达式作为一个模板，将某个字符模式与所搜索的字符串进行匹配，即用来搜索编辑或是操纵文本和数据。
+
+正则表达式并不仅限于某一种语言，但是在每种语言中有细微的差别。
+Java正则表达式和Perl的是最为相似的。
+
+##正则表达式语法
+
+###正则表达式通用匹配符号
+
+|正则表达式|说明|
+|:---|:---|
+| \^ |匹配输入字符串开始的位置。 | 
+| \$ |匹配输入字符串结尾的位置。 |
+| xy |x匹配后面紧接着y的匹配。|
+| x\|y |匹配 x 或 y。例如，'z|food' 匹配"z"或"food"。'(z|f)ood' 匹配"zood"或"food"。|
+| x && y |匹配 x 与 y这两个字符串的交集。|
+| [xyz] | 字符集。匹配包含的任一字符。例如，"[abc]"匹配"plain"中的"a"。|
+|[\^xyz] | 反向字符集。匹配未包含的任何字符。例如，"[\^abc]"匹配"plain"中"p"，"l"，"i"，"n"。|
+|[a-z] |字符范围。匹配指定范围内的任何字符。例如，"[a-z]"匹配"a"到"z"范围内的任何小写字母。|
+|[\^a-z]|反向范围字符。匹配不在指定的范围内的任何字符。例如，"[\^a-z]"匹配任何不在"a"到"z"范围内的任何字符。|
+|. | 匹配除"\n"之外的任何单个字符。若要匹配包括"\n"在内的任意字符，请使用诸如"[\s\S]"之类的模式。|
+
+<!-- 如果设置了 RegExp 对象的 Multiline 属性，\^ 还会与"\n"或"\r"之后的位置匹配。-->
+<!-- 如果设置了 RegExp 对象的 Multiline 属性，\$ 还会与"\n"或"\r"之前的位置匹配。-->
+
+例：
+
+|正则表达式|说明|
+|:---|:---|
+|[A-Z]| 条件限制在大写A to Z范围中一个字符|
+|[a-zA-Z]| 条件限制在小写a to z或大写A to Z范围中一个字符|
+|[0-9]| 条件限制在小写0 to 9范围中一个字符|
+|[0-9a-z]| 条件限制在小写0 to 9或a to z范围中一个字符|
+|[0-9[a-z]]| 条件限制在小写0 to 9或a to z范围中一个字符(交集)|
+|[...]| 匹配括号内的任意单个字符。|
+|[\^...]| 匹配不在括号内的任意单个字符。|
+|[\^A-Z]|     条件限制在非大写A to Z范围中一个字符|
+|[\^a-zA-Z]| 条件限制在非小写a to z或大写A to Z范围中一个字符|
+|[\^0-9]|     条件限制在非小写0 to 9范围中一个字符|
+|[\^0-9a-z]| 条件限制在非小写0 to 9或a to z范围中一个字符|
+|[\^0-9[a-z]]| 条件限制在非小写0 to 9或a to z范围中一个字符(交集)|
+
+
+###Java正则表达式元字符
+
+|字符|说明|
+|:---|:---|
+| \\ |将下一字符标记为特殊字符、文本、反向引用或八进制转义符。<br>例如，"n"匹配字符"n"。"\n"匹配换行符。序列"\\ \\"匹配"\\"，"\\("匹配"(" |
+|\t | 间隔 ('\u0009')|
+|\n | 换行 ('\u000A')|
+|\r | 回车 ('\u000D')|
+|\d | 任意数字，等价于[0-9]|
+|\D | 任意非数字，等价于[\^0-9]|
+|\s | 任意空白字符，等同于[\t\n\x0B\f\r]|
+|\S | 任意非空白字符，等同于[^\s]|
+|\w | 任意英文字符，等同于[a-zA-Z_0-9]|
+|\W | 任意非英文字符，等同于[^\w]|
+|\f | 换页符|
+|\e | Escape|
+|\b | 单词的边界|
+|\B | 非单词的边界|
+|\G | 前一个匹配的结束|
+
+有两种方法可以在正则表达式中像一般字符一样使用元字符。
+
+- 在元字符前添加反斜杠(\\)
+- 将元字符置于\Q(开始引用)和\E(结束引用)间
+
+###正则表达式量词
+
+量词指定了字符匹配的发生次数。
+
+|正则表达式|说明|
+|:---|:---|
+|\* |零次或多次匹配前面的字符或子表达式。例如，zo* 匹配"z"和"zoo"。\* 等效于 {0,}。|
+|\+ |一次或多次匹配前面的字符或子表达式。例如，"zo+"与"zo"和"zoo"匹配，但与"z"不匹配。\+ 等效于 {1,}。 |
+|? |零次或一次匹配前面的字符或子表达式。例如，"do(es)?"匹配"do"或"does"中的"do"。? 等效于 {0,1}。|
+|{n} | n 是非负整数。正好匹配 n 次。例如，"o{2}"与"Bob"中的"o"不匹配，但与"food"中的两个"o"匹配。|
+|{n,} |n 是非负整数。至少匹配 n 次。例如，"o{2,}"不匹配"Bob"中的"o"，而匹配"foooood"中的所有 o。"o{1,}"等效于"o+"。"o{0,}"等效于"o*"。|
+|{n,m} | m 和 n 是非负整数，其中 n $\le$ m。匹配至少 n 次，至多 m 次。例如，"o{1,3}"匹配"fooooood"中的头三个 o。'o{0,1}' 等效于 'o?'。注意：您不能将空格插入逗号和数字之间。|
+
+量词可以和character classes和capturing group一起使用。
+例如，
+
+- [abc]+表示a,b或c出现一次或者多次。
+- (abc)+表示capturing group “abc”出现一次或多次。我们即将讨论capturing group。
+ 
+<!--
+| (pattern) | 匹配 pattern 并捕获该匹配的子表达式。可以使用 \$0…\$9 属性从结果"匹配"集合中检索捕获的匹配。若要匹配括号字符 ( )，请使用"\\("或者"\\)"。|
+| (?:pattern) | 匹配 pattern 但不捕获该匹配的子表达式，即它是一个非捕获匹配，不存储供以后使用的匹配。这对于用"or"字符 (\|) 组合模式部件的情况很有用。例如，'industr(?:y\|ies) 是比 'industry\|industries' 更经济的表达式。 |
+| (? = pattern) | 执行正向预测先行搜索的子表达式，该表达式匹配处于匹配 pattern 的字符串的起始点的字符串。它是一个非捕获匹配，即不能捕获供以后使用的匹配。例如，'Windows (?=95\|98\|NT\|2000)' 匹配"Windows 2000"中的"Windows"，但不匹配"Windows 3.1"中的"Windows"。预测先行不占用字符，即发生匹配后，下一匹配的搜索紧随上一匹配之后，而不是在组成预测先行的字符后。|
+| (?!pattern) | 执行反向预测先行搜索的子表达式，该表达式匹配不处于匹配 pattern 的字符串的起始点的搜索字符串。它是一个非捕获匹配，即不能捕获供以后使用的匹配。例如，'Windows (?!95\|98\|NT\|2000)' 匹配"Windows 3.1"中的 "Windows"，但不匹配"Windows 2000"中的"Windows"。预测先行不占用字符，即发生匹配后，下一匹配的搜索紧随上一匹配之后，而不是在组成预测先行的字符后。|
+
+
+
+~~~java
+package com.journaldev.util;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+ 
+public class RegexExamples { 
+    public static void main(String[] args) {
+        // using pattern with flags
+        Pattern pattern = Pattern.compile("ab", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher("ABcabdAb");
+        
+        // using Matcher find(), group(), start() and end() methods
+        while (matcher.find()) {
+            System.out.println("Found the text \"" + matcher.group()
+                    + "\" starting at " + matcher.start()
+                    + " index and ending at index " + matcher.end());
+        }
+ 
+        // using Pattern split() method
+        pattern = Pattern.compile("\\W");
+        String[] words = pattern.split("one@two#three:four$five");
+        
+        for (String s : words) {
+            System.out.println("Split using Pattern.split(): " + s);
+        }
+ 
+        // using Matcher.replaceFirst() and replaceAll() methods
+        pattern = Pattern.compile("1*2");
+        matcher = pattern.matcher("11234512678");
+        
+        System.out.println("Using replaceAll: " + matcher.replaceAll("_"));
+        System.out.println("Using replaceFirst: " + matcher.replaceFirst("_"));
+    }
+}
+~~~
+
+上述程序的输出是：
+
+>Input String matches regex - true
+>Exception in thread "main" java.util.regex.PatternSyntaxException: Dangling meta >character '*' near index 0
+>*xx*
+>^
+>	at java.util.regex.Pattern.error(Pattern.java:1924)
+>	at java.util.regex.Pattern.sequence(Pattern.java:2090)
+>	at java.util.regex.Pattern.expr(Pattern.java:1964)
+>	at java.util.regex.Pattern.compile(Pattern.java:1665)
+>	at java.util.regex.Pattern.(Pattern.java:1337)
+>	at java.util.regex.Pattern.compile(Pattern.java:1022)
+>	at com.journaldev.util.PatternExample.main(PatternExample.java:13)
+
+
+-->
+
+例：
+
+|正则表达式|说明|
+|:---|:---|
+|J* | 0个以上J|
+|.* | 0个以上任意字符|
+|J.*D| J与D之间0个以上任意字符|
+|J+| 1个以上J|
+|.+ | 1个以上任意字符|
+|J.+D| J与D之间1个以上任意字符|
+|JA?| J或者JA出现|
+|J{2}| JJ|
+|J{3}| JJJ|
+|J{3,} | JJJ,JJJJ,JJJJJ,(3次以上J并存)|
+|J{3,5} | JJJ或JJJJ或JJJJJ|
+|J\|A |J或A|
+|Java\|Hello | Java或Hello|
+ 
+
+##正则表达式类以及应用举例
+
+Java提供了java.util.regex包来与正则表达式进行模式匹配。
+
+java.util.regex 包主要包含了三个类： __Pattern类__, __Matcher类__, __PatternSyntaxException__
+
+
+###Pattern类
+一个 Pattern 对象是正则表达式编译表示。 Pattern 类没有提供公共的构造函数。要创建一个 Pattern 对象，你必须首先调用他的公用静态编译方法来获得 Pattern 对象。这些方法的第一个参数是正则表达式。
+
+Pattern的方法如下：
+
+|Return Value| 方法 |说明|
+|:---|:---|:---|
+|static Pattern | compile(String regex) | 将给定的正则表达式编译并赋予给Pattern类 |
+|static Pattern | compile(String regex, int flags) | 同上，但增加flag参数的指定，可选的flag参数包括：CASE INSENSITIVE,MULTILINE,DOTALL,UNICODE CASE， CANON EQ |
+|int | flags() | 返回当前Pattern的匹配flag参数. |
+|Matcher | matcher(CharSequence input) | 生成一个给定命名的Matcher对象 |
+|static boolean | matches(String regex, CharSequence input) | 编译给定的正则表达式并且对输入的字串以该正则表达式为模开展匹配,该方法适合于该正则表达式只会使用一次的情况，也就是只进行一次匹配工作，因为这种情况下并不需要生成一个Matcher实例。|
+|String | pattern() | 返回该Patter对象所编译的正则表达式。|
+| String[] | split(CharSequence input) | 将目标字符串按照Pattern里所包含的正则表达式为模进行分割。|
+| String[] | split(CharSequence input, int limit) | 作用同上，增加参数limit目的在于要指定分割的段数，如将limi设为2，那么目标字符串将根据正则表达式分为割为两段。|
+
+在使用Pattern.compile函数时，可以加入控制正则表达式的匹配行为的参数：
+Pattern Pattern.compile(String regex, int flag)
+
+flag的取值范围如下：
+
+|flag参数|说明|
+|:---|:---|
+|Pattern.CANON_EQ | 当且仅当两个字符的"正规分解(canonical decomposition)"都完全相同的情况下，才认定匹配。比如用了这个标志之后，表达式"a/u030A"会匹配"?"。默认情况下，不考虑"规范相等性(canonical equivalence)"。|
+|Pattern.CASE_INSENSITIVE(?i) | 默认情况下，大小写不明感的匹配只适用于US-ASCII字符集。这个标志能让表达式忽略大小写进行匹配。要想对Unicode字符进行大小不明感的匹 配，只要将UNICODE_CASE与这个标志合起来就行了。|
+|Pattern.COMMENTS | 在这种模式下，匹配时会忽略(正则表达式里的)空格字符(译者注：不是指表达式里的"\\s"，而是指表达式里的空格，tab，回车之类)。注释从#开始，一直到这行结束。可以通过嵌入式的标志来启用Unix行模式。|
+|Pattern.DOTALL | 在这种模式下，表达式'.'可以匹配任意字符，包括表示一行的结束符。默认情况下，表达式'.'不匹配行的结束符。|
+|Pattern.MULTILINE |在这种模式下，'\^'和'\$'分别匹配一行的开始和结束。此外，'\^'仍然匹配字符串的开始，'\$'也匹配字符串的结束。默认情况下，这两个表达式仅仅匹配字符串的开始和结束。|
+|Pattern.UNICODE_CASE | 在这个模式下，如果你还启用了CASE_INSENSITIVE标志，那么它会对Unicode字符进行大小写不明感的匹配。默认情况下，大小写不敏感的匹配只适用于US-ASCII字符集。|
+|Pattern.UNIX_LINES | 在这个模式下，只有'\n'才被认作一行的中止，并且与'.'，'\^'，以及'\$'进行匹配。|
+
+
+###Matcher类
+一个 Matcher 对象是用来解释模式和执行与输入字符串相匹配的操作。和 Pattern 类一样 Matcher 类也是没有构造方法的，你需要通过调用 Pattern 对象的 matcher 方法来获得 Matcher 对象。
+
+Matcher方法如下：
+
+|Return Value| 方法 |说明|
+|:---|:---|:---|
+|Matcher | appendReplacement(StringBuffer sb, String replacement)| 将当前匹配子串替换为指定字符串，并且将替换后的子串以及其之前到上次匹配子串之后的字符串段添加到一个StringBuffer对象里。|
+|StringBuffer | appendTail(StringBuffer sb) | 将最后一次匹配工作后剩余的字符串添加到一个StringBuffer对象里。|
+|int | end() | 返回当前匹配的子串的最后一个字符在原目标字符串中的索引位置 。|
+|int | end(int group) | 返回与匹配模式里指定的组相匹配的子串最后一个字符的位置。|
+|boolean | find() | 尝试在目标字符串里查找下一个匹配子串。|
+|boolean | find(int start) | 重设Matcher对象，并且尝试在目标字符串里从指定的位置开始查找下一个匹配的子串。|
+|String|group()|返回当前查找而获得的与组匹配的所有子串内容|
+|String|group(int group)|返回当前查找而获得的与指定的组匹配的子串内容|
+|int|groupCount()|返回当前查找所获得的匹配组的数量。|
+|boolean|lookingAt()|检测目标字符串是否以匹配的子串起始。|
+|boolean|matches()|尝试对整个目标字符展开匹配检测，也就是只有整个目标字符串完全匹配时才返回真值。|
+|Pattern|pattern()|返回该Matcher对象的现有匹配模式，也就是对应的Pattern 对象。|
+|String|replaceAll(String replacement)|将目标字符串里与既有模式相匹配的子串全部替换为指定的字符串。|
+|String|replaceFirst(String replacement)|将目标字符串里第一个与既有模式相匹配的子串替换为指定的字符串。|
+|Matcher|reset()|重设该Matcher对象。|
+|Matcher|reset(CharSequence input)|重设该Matcher对象并且指定一个新的目标字符串。|
+|int|start()|返回当前查找所获子串的开始字符在原目标字符串中的位置。|
+|int|start(int group)|返回当前查找所获得的和指定组匹配的子串的第一个字符在原目标字符串中的位置。|
+
+一个Matcher实例是被用来对目标字符串进行基于既有模式（也就是一个给定的Pattern所编译的正则表达式）进行匹配查找的，所有往Matcher的输入都是通过CharSequence接口提供的，这样做的目的在于可以支持对从多元化的数据源所提供的数据进行匹配工作。
+
+一个Matcher对象是由一个Pattern对象调用其matcher()方法而生成的，一旦该Matcher对象生成,它就可以进行三种不同的匹配查找操作：
+
+- matches()方 法 尝试对整个目标字符展开匹配检测，也就是只有整个目标字符串完全匹配时才返回真值。
+- lookingAt()方法 将检测目标字符串是否以匹配的子串起始。
+- find()方法 尝试在目标字符串里查找下一个匹配子串。
+
+
+Matcher类同时提供了四个将匹配子串替换成指定字符串的方法：
+
+- replaceAll()
+- replaceFirst()
+- appendReplacement()
+- appendTail()
+
+
+###PatternSyntaxException
+一个 PatternSyntaxException 对象是一个不被检查的异常，来指示正则表达式中的语法错误。
 
 
 
 
+###应用举例
+
+####在字符串包含验证时
+
+~~~java
+//查找以Java开头,任意结尾的字符串
+  Pattern pattern = Pattern.compile("^Java.*");
+  Matcher matcher = pattern.matcher("Java不是人");
+  boolean b= matcher.matches();
+  //当条件满足时，将返回true，否则返回false
+  System.out.println(b);
+~~~
+
+####以多条件分割字符串时
+
+~~~java
+Pattern pattern = Pattern.compile("[, |]+");
+String[] strs = pattern.split("Java Hello World  Java,Hello,,World|Sun");
+for (int i=0;i<strs.length;i++) {
+    System.out.println(strs[i]);
+} 
+~~~
+
+####文字替换（首次出现字符）
+
+~~~java
+Pattern pattern = Pattern.compile("正则表达式");
+Matcher matcher = pattern.matcher("正则表达式 Hello World,正则表达式 Hello World");
+//替换第一个符合正则的数据
+System.out.println(matcher.replaceFirst("Java"));
+~~~
+
+####文字替换（全部）
+
+~~~java
+Pattern pattern = Pattern.compile("正则表达式");
+Matcher matcher = pattern.matcher("正则表达式 Hello World,正则表达式 Hello World");
+//替换第一个符合正则的数据
+System.out.println(matcher.replaceAll("Java"));
+~~~
+
+####文字替换（置换字符）
+
+~~~java
+Pattern pattern = Pattern.compile("正则表达式");
+Matcher matcher = pattern.matcher("正则表达式 Hello World,正则表达式 Hello World ");
+StringBuffer sbr = new StringBuffer();
+while (matcher.find()) {
+    matcher.appendReplacement(sbr, "Java");
+}
+matcher.appendTail(sbr);
+System.out.println(sbr.toString());
+~~~
+
+####验证是否为邮箱地址
+
+~~~java
+String str="ceponline@yahoo.com.cn";
+Pattern pattern = Pattern.compile("[//w//.//-]+@([//w//-]+//.)+[//w//-]+",Pattern.CASE_INSENSITIVE);
+Matcher matcher = pattern.matcher(str);
+System.out.println(matcher.matches());
+~~~
+
+####去除html标记
+
+~~~java
+Pattern pattern = Pattern.compile("<.+?>", Pattern.DOTALL);
+Matcher matcher = pattern.matcher("<a href=/"index.html/">主页</a>");
+String string = matcher.replaceAll("");
+System.out.println(string);
+~~~
+
+####查找html中对应条件字符串
+
+~~~java
+Pattern pattern = Pattern.compile("href=/"(.+?)/"");
+Matcher matcher = pattern.matcher("<a href=/"index.html/">主页</a>");
+if(matcher.find())
+  System.out.println(matcher.group(1));
+}
+~~~
+
+####截取http://地址
+
+~~~java
+//截取url
+Pattern pattern = Pattern.compile("(http://|https://){1}[//w//.//-/:]+");
+Matcher matcher = pattern.matcher("dsdsds<http://dsds//gfgffdfd>fdf");
+StringBuffer buffer = new StringBuffer();
+while(matcher.find()){              
+    buffer.append(matcher.group());        
+    buffer.append("/r/n");              
+System.out.println(buffer.toString());
+}
+~~~
+        
+####替换指定{}中文字
+
+~~~java
+String str = "Java目前的发展史是由{0}年-{1}年";
+String[][] object={new String[]{"//{0//}","1995"},new String[]{"//{1//}","2007"}};
+System.out.println(replace(str,object));
+
+public static String replace(final String sourceString,Object[] object) {
+            String temp=sourceString;    
+            for(int i=0;i<object.length;i++){
+                      String[] result=(String[])object[i];
+               Pattern    pattern = Pattern.compile(result[0]);
+               Matcher matcher = pattern.matcher(temp);
+               temp=matcher.replaceAll(result[1]);
+            }
+            return temp;
+}
+~~~
+
+####以正则条件查询指定目录下文件
+
+~~~java
+ //用于缓存文件列表
+        private ArrayList files = new ArrayList();
+        //用于承载文件路径
+        private String _path;
+        //用于承载未合并的正则公式
+        private String _regexp;
+        
+        class MyFileFilter implements FileFilter {
+
+              /**
+               * 匹配文件名称
+               */
+              public boolean accept(File file) {
+                try {
+                  Pattern pattern = Pattern.compile(_regexp);
+                  Matcher match = pattern.matcher(file.getName());                
+                  return match.matches();
+                } catch (Exception e) {
+                  return true;
+                }
+              }
+            }
+        
+        /**
+         * 解析输入流
+         * @param inputs
+         */
+        FilesAnalyze (String path,String regexp){
+            getFileName(path,regexp);
+        }
+        
+        /**
+         * 分析文件名并加入files
+         * @param input
+         */
+        private void getFileName(String path,String regexp) {
+            //目录
+              _path=path;
+              _regexp=regexp;
+              File directory = new File(_path);
+              File[] filesFile = directory.listFiles(new MyFileFilter());
+              if (filesFile == null) return;
+              for (int j = 0; j < filesFile.length; j++) {
+                files.add(filesFile[j]);
+              }
+              return;
+            }
+    
+        /**
+         * 显示输出信息
+         * @param out
+         */
+        public void print (PrintStream out) {
+            Iterator elements = files.iterator();
+            while (elements.hasNext()) {
+                File file=(File) elements.next();
+                    out.println(file.getPath());    
+            }
+        }
+
+        public static void output(String path,String regexp) {
+
+            FilesAnalyze fileGroup1 = new FilesAnalyze(path,regexp);
+            fileGroup1.print(System.out);
+        }
+    
+        public static void main (String[] args) {
+            output("C://","[A-z|.]*");
+        }
+~~~
+
+
+因为正则表达式是一个很庞杂的体系，所以我仅例举些入门的概念，更多的请参阅相关书籍及自行摸索。 
+
+如果读者要对正则表达进一步了解的话，推荐阅读Jeffrey Frieldl的__Mastering Regular Expressions__。
 
