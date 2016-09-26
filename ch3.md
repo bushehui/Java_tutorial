@@ -1647,3 +1647,7 @@ public static String replace(final String sourceString,Object[] object) {
 
 如果读者要对正则表达进一步了解的话，推荐阅读Jeffrey Frieldl的__Mastering Regular Expressions__。
 
+---
+
+本文档 Github ：
+https://github.com/bushehui/Java_tutorial

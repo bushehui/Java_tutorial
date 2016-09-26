@@ -1,7 +1,6 @@
 ---
-title: Java 语言概述
+title : Java 语言概述
 ---
-
 
 #Java语言概述
 
@@ -409,5 +408,8 @@ public修饰的类名称必须与包含它的Java源程序文件名一致<br>
 
 <!--http://study.163.com/course/introduction/342010.htm#/courseDetail-->
 
+---
 
+本文档 Github ：
+https://github.com/bushehui/Java_tutorial
 
