@@ -30,17 +30,20 @@
 * 运行环境与开发环境
 * "Hello Word!"程序
 * 参考资料
+
 ###[ch2.md : Java 语言基础知识(一)](https://github.com/bushehui/Java_tutorial/blob/master/ch2.md)
 * 认识程序
 * 数据类型，变量和常量
 * Java开发类库组成
 * 练习
+
 ###[ch3.md : Java 语言基础知识(二)](https://github.com/bushehui/Java_tutorial/blob/master/ch3.md)
 * 程序
 * Example
 * 数组
 * 字符串
 * 正则表达式
+
 ###[ch4.md : Java语言算法设计基础](https://github.com/bushehui/Java_tutorial/blob/master/ch4.md)
 * 什么是程序？
 * 算法设计基础
@@ -48,14 +51,17 @@
 	* 查找
 	* 排序
 	* 递归
+
 ###[ch5.md : Java语言输入/输出](https://github.com/bushehui/Java_tutorial/blob/master/ch5.md)
 * 输入/输出流
 * 文件流类与文件操作
 * 异常处理
+
 ###[ch6.md : Java语言package](https://github.com/bushehui/Java_tutorial/blob/master/ch6.md)
 * 包(package)
 * 内部类和匿名类
 * 访问控制和类的封装性
+
 ###[ch6_1.md : Java语言面向对象(一)](https://github.com/bushehui/Java_tutorial/blob/master/ch6_1.md)
 * 面向对象概述
 * 面向对象的三大特点：封装， 继承， 多态
@@ -63,6 +69,7 @@
 * 类(class)
 * 消息(message)
 * 面向对象系统的特性
+
 ###[ch6_2.md : Java语言面向对象(二)](https://github.com/bushehui/Java_tutorial/blob/master/ch6_2.md)
 * 类的定义
 	* 类的定义格式
@@ -70,6 +77,7 @@
 	* 方法重载
 	* 构造方法
 * 练习
+
 ###[ch6_3.md : Java语言面向对象(三)](https://github.com/bushehui/Java_tutorial/blob/master/ch6_3.md)
 * 对象的定义和使用
 	*  创建对象
@@ -80,6 +88,7 @@
 	* 方法的参数传递
 	* 变量与方法
 	* this关键字
+	
 ###[ch6_4.md : Java语言面向对象(四)](https://github.com/bushehui/Java_tutorial/blob/master/ch6_4.md)
 * 继承
 	* 创建子类
