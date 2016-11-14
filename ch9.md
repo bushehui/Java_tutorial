@@ -305,33 +305,47 @@ Connection con = DriverManager.getConnection(url);
 ~~~
 
 使用DriverManager类中的静态方法
+
+~~~java
 Connection con= getConnection(databaseURL)
+~~~
+
 Connection实际上是一个接口，它负责维护Java应用程序与数据库之间的连接。
 Connection 对象代表与数据库的连接。连接过程包括所执行的 SQL 语句和在该连接上所返回的结果。一个应用程序可与单个数据库有一个或多个连接，或者可与许多数据库有连接。
 
-Database    URL Pattern                     
-Access        jdbc:odbc:dataSource      
-MySQL       jdbc:mysql://hostname/dbname    
-Oracle        jdbc:oracle:thin:@hostname:port#:oracleDBSID
+|Database| URL Pattern| 
+|:---|:---|          
+|Access  | jdbc:odbc:dataSource|
+|MySQL   | jdbc:mysql://hostname/dbname |
+|Oracle  | jdbc:oracle:thin:@hostname:port#:oracleDBSID|
+
 For Access:
-Connection connection = DriverManager.getConnection
-  ("jdbc:odbc:ExampleMDBDataSource");
+
+>Connection connection = DriverManager.getConnection("jdbc:odbc:ExampleMDBDataSource");
 
 For MySQL:
-Connection connection = DriverManager.getConnection
-  ("jdbc:mysql://localhost/test");
+
+>Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/test");
  
 For Oracle:
-Connection connection = DriverManager.getConnection
+
+>Connection connection = DriverManager.getConnection
   ("jdbc:oracle:thin:@liang.armstrong.edu:1521:orcl",  "scott", "tiger");
 
 
 与数据库建立连接的标准方法是调用方法：
+
+~~~java
 DriverManger.getConnection(String url)
 DriverManger.getConnection(String url, Properties info)
 DriverManger.getConnection(String url, String user, String password)
-JDBC中URL字符串的准确形式随着数据库的不同而有所变化，其一般形式是：jdbc:<subprotocol>:<subname> 
+~~~
 
+JDBC中URL字符串的准确形式随着数据库的不同而有所变化，其一般形式是：
+
+~~~java
+jdbc:<subprotocol>:<subname> 
+~~~
 
 
 
@@ -341,26 +355,26 @@ JDBC中URL字符串的准确形式随着数据库的不同而有所变化，其�
 Statement stmt = con.createStatement();
 ~~~
 
-Statement statement = connection.createStatement();
+>Statement statement = connection.createStatement();
+
 Statement 对象用于将 SQL 语句发送到数据库中，并返回结果。
 
-方  法
-说  明
+方  法 : ResultSet executeQuery(String sql)
+说  明 : 执行SQL查询指令select并返回结果集
 
-ResultSet executeQuery(String sql)
-执行SQL查询指令select并返回结果集
+方  法 : int executeUpdate(String sql)
+说  明 : 执行对数据库修改的SQL指令如insert、delete、update等
 
-int executeUpdate(String sql)
-执行对数据库修改的SQL指令如insert、delete、update等
-
-void close()
-断开对数据库的连接
+方  法 :void close()
+说  明 :断开对数据库的连接
 
 (1) 创建 Statement 对象
 Statement stmt = con.createStatement();
+
 (2) 使用 Statement 对象执行语句 
 String sql = "select * from userlist where username='" + username + "'";
 ResultSet rs = stmt.executeQuery(sql); 
+
 (3) 语句完成 
 语句在已执行且所有结果返回时，即认为已完成。对于返回一个结果集的 executeQuery 方法，在检索完 ResultSet 对象的所有行时该语句完成。对于方法 executeUpdate，当它执行时语句即完成。 
 
