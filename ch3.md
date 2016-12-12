@@ -1651,3 +1651,14 @@ public static String replace(final String sourceString,Object[] object) {
 
 本文档 Github ：
 https://github.com/bushehui/Java_tutorial
+
+
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+
+
