@@ -4,9 +4,9 @@ title: Java语言输入/输出
 
 [TOC]
 
-#输入/输出流
+# 输入/输出流(Stream)
 
-##输入/输出流概述
+## 输入/输出流概述
 
 输入/输出处理是程序设计中非常重要的一部分，比如从键盘读取数据、从文件中读取数据或向文件中写数据等等。
 
@@ -16,6 +16,10 @@ Java把这些不同类型的输入、输出源抽象为__流__（__stream__）�
 
 Jdk提供了包__java.io__，其中包括一系列的类来实现输入/输出处理。
 
+- 几乎包含了所有操作输入、输出需要的类。所有这些流类代表了输入源和输出目标。
+- java.io包中的流支持很多种格式，比如：基本类型、对象、本地化字符集等等。
+
+
 进行I/O操作时可能会产生I/O异常，属于非运行时异常，应该在程序中处理。如：
 
 - FileNotFoundException, 
@@ -24,7 +28,7 @@ Jdk提供了包__java.io__，其中包括一系列的类来实现输入/输出�
 
 
 
-##什么是流
+## 什么是流
 
 流实际上是一个数据序列。<br>
 采用流的机制可以使数据有序地输入和输出。<br>
@@ -49,12 +53,12 @@ Java有各种各样的执行I/O的流，在java.io包中定义了这些流，其
 ![](fig/fileio.png)
 
 
-###字符流
+### 字符流
 Java中的字符使用的是__Unicode__编码，每个字符占有两个字节，即$16$位。<br>
 字符流是以$16$位的Unicode码表示的字符为基本处理单位，进行文本数据的读写，可以实现Java程序中的内部格式和文本文件、显示输出、键盘输入等外部格式之间的转换。<br>
 __Reader__和__Writer__是java.io包中所有字符流的抽象基类。
 
-####Reader类
+#### Reader类
 
 － 处理所有字符流输入类的超类。
 － 是定义Java的字符流输入模式的抽象类。
@@ -98,7 +102,7 @@ public abstract void close() throws IOException;
 
 ![](fig/classReader.png)
 
-####Writer类
+#### Writer类
 
 － 处理所有字符流输出类的超类。
 － 是定义Java的字符流输出模式的抽象类。
@@ -139,7 +143,7 @@ public abstract void close() throws IOException;
 ![](fig/classWriter.png)
 
 
-####Reader与Writer的子类
+#### Reader与Writer的子类
 
 从Reader(直接子类6个)和Writer(直接子类7个)派生出的一系列类，这类流以$16$位的Unicode码表示的字符为基本处理单位。
 
@@ -154,12 +158,79 @@ public abstract void close() throws IOException;
 
 
 
-###字节流的写入和读取
+~~~java
+// 使用 BufferedReader 在控制台读取字符
+ 
+import java.io.*;
+ 
+public class BRRead {
+  public static void main(String args[]) throws IOException
+  {
+    char c;
+    // 使用 System.in 创建 BufferedReader 
+    BufferedReader br = new BufferedReader(new 
+                       InputStreamReader(System.in));
+    System.out.println("输入字符, 按下 'q' 键退出。");
+    // 读取字符
+    do {
+       c = (char) br.read();
+       System.out.println(c);
+    } while(c != 'q');
+  }
+}
+~~~
+
+以上实例编译运行结果如下:
+
+>输入字符, 按下 'q' 键退出。
+>runoob
+>r
+>u
+>n
+>o
+>o
+>b
+>q
+>q
+
+
+~~~java
+// 使用 BufferedReader 在控制台读取字符
+import java.io.*;
+public class BRReadLines {
+  public static void main(String args[]) throws IOException
+  {
+    // 使用 System.in 创建 BufferedReader 
+    BufferedReader br = new BufferedReader(new
+                            InputStreamReader(System.in));
+    String str;
+    System.out.println("Enter lines of text.");
+    System.out.println("Enter 'end' to quit.");
+    do {
+       str = br.readLine();
+       System.out.println(str);
+    } while(!str.equals("end"));
+  }
+}
+~~~
+
+以上实例编译运行结果如下:
+>Enter lines of text.
+>Enter 'end' to quit.
+>This is line one
+>This is line one
+>This is line two
+>This is line two
+>end
+>end
+
+
+### 字节流的写入和读取
 
 字节流类是从抽象类__InputStream__和__OutputStream__派生出来的一系列类。<br>
 这类流以字节(byte)为基本处理单位。
 
-####InputStream
+#### InputStream
 
 InputStream类直接继承Object类。其主要方法如下:
 
@@ -202,7 +273,7 @@ boolean markSupported( );　
 
 ![](fig/classInput.png)
 
-####OutputStream
+#### OutputStream
 
 - 输出数据
 
@@ -236,7 +307,7 @@ close( );
 ![](fig/classOutput.png)
 
 
-###Input/OutputStream的子类
+### Input/OutputStream的子类
 
 |FileInputStream|FileOutputStream|
 |:----|:----|
@@ -247,6 +318,88 @@ close( );
 |StringBufferInputStream||
 |SequenceInputStream||
 
+
+### InputStream 和 OutputStream 用法的例子
+
+~~~
+import java.io.*;
+ 
+public class fileStreamTest{
+  public static void main(String args[]){
+    try{
+      byte bWrite [] = {11,21,3,40,5};
+      OutputStream os = new FileOutputStream("test.txt");
+      for(int x=0; x < bWrite.length ; x++){
+      os.write( bWrite[x] ); // writes the bytes
+    }
+    os.close();
+ 
+    InputStream is = new FileInputStream("test.txt");
+    int size = is.available();
+ 
+    for(int i=0; i< size; i++){
+      System.out.print((char)is.read() + "  ");
+    }
+      is.close();
+    }catch(IOException e){
+      System.out.print("Exception");
+    }  
+  }
+}
+~~~
+
+首先创建文件test.txt，并把给定的数字以二进制形式写进该文件，同时输出到控制台上。
+
+~~~java
+//文件名 :fileStreamTest2.java
+import java.io.*;
+ 
+public class fileStreamTest2{
+  public static void main(String[] args) throws IOException {
+    
+    File f = new File("a.txt");
+    FileOutputStream fop = new FileOutputStream(f);
+    // 构建FileOutputStream对象,文件不存在会自动新建
+    
+    OutputStreamWriter writer = new OutputStreamWriter(fop, "UTF-8");
+    // 构建OutputStreamWriter对象,参数可以指定编码,默认为操作系统默认编码,windows上是gbk
+    
+    writer.append("中文输入");
+    // 写入到缓冲区
+    
+    writer.append("\r\n");
+    //换行
+    
+    writer.append("English");
+    // 刷新缓存冲,写入到文件,如果下面已经没有写入的内容了,直接close也会写入
+    
+    writer.close();
+    //关闭写入流,同时会把缓冲区内容写入文件,所以上面的注释掉
+    
+    fop.close();
+    // 关闭输出流,释放系统资源
+ 
+    FileInputStream fip = new FileInputStream(f);
+    // 构建FileInputStream对象
+    
+    InputStreamReader reader = new InputStreamReader(fip, "UTF-8");
+    // 构建InputStreamReader对象,编码与写入相同
+ 
+    StringBuffer sb = new StringBuffer();
+    while (reader.ready()) {
+      sb.append((char) reader.read());
+      // 转成char加到StringBuffer对象中
+    }
+    System.out.println(sb.toString());
+    reader.close();
+    // 关闭读取流
+    
+    fip.close();
+    // 关闭输入流,释放系统资源
+ 
+  }
+}
+~~~
 
 
 ###基本的流类
@@ -265,7 +418,7 @@ close( );
 
 
 
-###标准输入/输出
+### 标准输入/输出
 
 在Java应用程序开始执行时(也就是当main方法被执行时)，Java就会通过系统类System自动创建3个与设备关联的流对象：__System.in__、__System.out__和__System.err__。<br>
 
@@ -303,7 +456,7 @@ public class TestScanner {
 
 
 
-##过滤流与流的串接 
+## 过滤流与流的串接 
 
 过滤流在读/写数据的同时可以对数据进行处理，它提供了同步机制，使得某一时刻只有一个线程可以访问一个I/O流，以防止多个线程同时对一个I/O流进行操作所带来的意想不到的结果。
 
@@ -325,7 +478,7 @@ FilterInputStream(InputStream in);
 FilterOutputStream(OutputStream out);
 ~~~
 
-###BufferedInputStream和BufferedOutputStream
+### BufferedInputStream和BufferedOutputStream
 
 __BufferedInputStream__ 和 __BufferedOutputStream__ 实现了带缓冲的过滤流，它提供了缓冲机制，把任意的I/O流串接到缓冲流上，自动利用内存缓冲，不必每次存取外设，可以提高该I/O流的存取效率。
 
@@ -341,7 +494,7 @@ BufferedOutputStream(OutputStream output, int bufSize)
 ~~~
 
 
-###DataInputStream和DataOutputStream
+### DataInputStream和DataOutputStream
 
 数据流类DataInputStream和DataOutputStream的处理对象除了字节或字节数组外，还可以实现对文件的不同数据类型的读写，将基本字节输入输出流，自动转成按基本数据类型进行读写的过滤流。
 
@@ -350,7 +503,7 @@ BufferedOutputStream(OutputStream output, int bufSize)
 
 
 
-####文件流、缓冲流与数据流的串接 
+#### 文件流、缓冲流与数据流的串接 
 
 BufferedInput/OutputStream
 自动利用内存缓冲，不必每次存取外设
@@ -379,7 +532,7 @@ PrintStream类（FilterOutputStream类的子类）包含了把各种原始类型
 
 ---
 
-####字节流和字符流的转化
+#### 字节流和字符流的转化
 
 - 字节流和字符流是Java提供的两种输入输出处理方式。
 
@@ -410,9 +563,9 @@ public OutputStreamWriter(OutputStream out, CharsetEncoder enc)
 
 
 
-#文件流类与文件操作 
+# 文件流类与文件操作 
 
-##I/O处理中，最常见的是对文件的操作
+## I/O处理中，最常见的是对文件的操作
 
 - java.io包中有关文件处理的类有：File、FileDescriptor、 FileInputStream、FileOutputStream、RamdomAccessFile
 - 处理字符文件的FileReader、FileWriter；
@@ -420,7 +573,7 @@ public OutputStreamWriter(OutputStream out, CharsetEncoder enc)
 - 在进行文件的读/写操作时，会产生非运行时异常IOException，必须捕获或声明抛弃。
 
 
-##文件的操作步骤
+## 文件的操作步骤
 
 对于文件的操作也就是实现对文件的读写，而不管是文本文件还是二进制文件都可采用相同的步骤：
 
@@ -429,7 +582,7 @@ public OutputStreamWriter(OutputStream out, CharsetEncoder enc)
 - 3.关闭流。 
 
 
-##File类
+## File类
 
 File类提供了与平台无关的方法来对磁盘上的文件或目录进行操作,以及获取信息。
 
@@ -438,7 +591,7 @@ File类提供了与平台无关的方法来对磁盘上的文件或目录进行�
 - File类的对象并不打开文件，也不提供任何文件处理功能。
 - java.io包中的其它类经常使用File对象来指定所要操作的文件或目录。
 
-###File类提供4个构造方法。
+### File类提供4个构造方法。
 
 ~~~java
 public File(String name)
@@ -463,7 +616,7 @@ File f3 = new File(f1,"test.txt");
 File f4 = new File("file://D:/Java/test.txt");
 ~~~
 
-###File类的方法
+### File类的方法
 
 | | |
 |:----|:----|
@@ -475,7 +628,43 @@ File f4 = new File("file://D:/Java/test.txt");
 |long lastModified()|上次修改时间，从1970年1月1号开始的标准时间(UTC)的毫秒数|
 
 
-###FileInputStream、FileOutputStream类与读写二进制文件 
+**实例**
+~~~java
+import java.io.File;
+public class DirList {
+   public static void main(String args[]) {
+      String dirname = "/java";
+      File f1 = new File(dirname);
+      if (f1.isDirectory()) {
+         System.out.println( "Directory of " + dirname);
+         String s[] = f1.list();
+         for (int i=0; i < s.length; i++) {
+            File f = new File(dirname + "/" + s[i]);
+            if (f.isDirectory()) {
+               System.out.println(s[i] + " is a directory");
+            } else {
+               System.out.println(s[i] + " is a file");
+            }
+         }
+      } else {
+         System.out.println(dirname + " is not a directory");
+    }
+  }
+}
+~~~
+
+运行结果如下：
+>Directory of /mysql
+>bin is a directory
+>lib is a directory
+>demo is a directory
+>test.txt is a file
+>README is a file
+>index.html is a file
+>include is a directory
+
+
+### FileInputStream、FileOutputStream类与读写二进制文件 
 
 FileInputStream和FileOutputStream 分别是InputStream和OutputStream的子类<br>
 用于进行文件的输入输出处理，其数据源和接收器都是文件。 <br>
@@ -500,7 +689,7 @@ File f = new File("Test.java");
 FileInputStream f2 = new FileInputStream(f);
 ~~~
 
-####FileOutputStream类
+#### FileOutputStream类
 
 - 用于向一个文本文件写数据
 - 它从超类中继承write，close等方法
@@ -613,7 +802,7 @@ public class fileStreamTest2{
 ~~~
 
 
-###RandomAccessFile
+### RandomAccessFile
 
 RandomAccessFile类提供了一种称为“随机访问文件”方式，可以：
 
@@ -650,7 +839,7 @@ RandomAccessFile(File file,String mode) throws FileNotFoundException;
 
 
 
-###写文本文件
+### 写文本文件
 
 FileWriter类是一个以字符方式写文件内容的Writer类的子类。
 
@@ -678,7 +867,40 @@ out.write(text.getText());
 out.close();
 ~~~
 
-###读文本文件
+**实例**
+
+~~~java
+import java.io.*;
+public class FileRead{
+   public static void main(String args[])throws IOException{
+      File file = new File("Hello1.txt");
+      // 创建文件
+      file.createNewFile();
+      // creates a FileWriter Object
+      FileWriter writer = new FileWriter(file); 
+      // 向文件写入内容
+      writer.write("This\n is\n an\n example\n"); 
+      writer.flush();
+      writer.close();
+      //创建 FileReader 对象
+      FileReader fr = new FileReader(file); 
+      char [] a = new char[50];
+      fr.read(a); // 从数组中读取内容
+      for(char c : a)
+          System.out.print(c); // 一个个打印字符
+      fr.close();
+   }
+}
+~~~
+
+以上实例编译运行结果如下：
+>This
+>is
+>an
+>example
+
+
+### 读文本文件
 
 FileReader类是一个以字符方式读取文件内容的Reader类的子类。
 
@@ -716,7 +938,157 @@ in.close();
 
 
 
-##对象序列化
+**实例**
+
+~~~java
+import java.io.*;
+public class FileRead{
+   public static void main(String args[])throws IOException{
+      File file = new File("Hello1.txt");
+      // 创建文件
+      file.createNewFile();
+      // creates a FileWriter Object
+      FileWriter writer = new FileWriter(file); 
+      // 向文件写入内容
+      writer.write("This\n is\n an\n example\n"); 
+      writer.flush();
+      writer.close();
+      // 创建 FileReader 对象
+      FileReader fr = new FileReader(file); 
+      char [] a = new char[50];
+      fr.read(a); // 读取数组中的内容
+      for(char c : a)
+          System.out.print(c); // 一个一个打印字符
+      fr.close();
+   }
+}
+~~~
+
+以上实例编译运行结果如下：
+>This
+>is
+>an
+>example
+
+
+
+### Java中的目录
+
+#### 创建目录
+File类中有两个方法可以用来创建文件夹：
+
+- **mkdir( )**方法
+	创建一个文件夹，成功则返回true，失败则返回false。
+	失败表明File对象指定的路径已经存在，或者由于整个路径还不存在，该文件夹不能被创建。
+- **mkdirs()**方法创建一个文件夹和它的所有父文件夹。
+
+下面的例子创建 "/tmp/user/java/bin"文件夹：
+
+~~~java
+//CreateDir.java
+import java.io.File;
+ 
+public class CreateDir {
+  public static void main(String args[]) {
+    String dirname = "/tmp/user/java/bin";
+    File d = new File(dirname);
+    // 现在创建目录
+    d.mkdirs();
+  }
+}
+~~~
+
+编译并执行上面代码来创建目录 "/tmp/user/java/bin"。
+
+**注意** 
+Java 在 UNIX 和 Windows 自动按约定分辨文件路径分隔符。如果你在 Windows 版本的 Java 中使用分隔符 (/) ，路径依然能够被正确解析。
+
+#### 读取目录
+
+**一个目录其实就是一个 File 对象，它包含其他文件和文件夹。**
+
+如果创建一个 File 对象并且它是一个目录，那么调用 **isDirectory()** 方法会返回 true。
+可以通过调用该对象上的 **list()** 方法，来提取它包含的文件和文件夹的列表。
+
+下面展示的例子说明如何使用 **list()** 方法来检查一个文件夹中包含的内容：
+
+~~~java
+//DirList.java
+import java.io.File;
+ 
+public class DirList {
+  public static void main(String args[]) {
+    String dirname = "/tmp";
+    File f1 = new File(dirname);
+    if (f1.isDirectory()) {
+      System.out.println( "目录 " + dirname);
+      String s[] = f1.list();
+      for (int i=0; i < s.length; i++) {
+        File f = new File(dirname + "/" + s[i]);
+        if (f.isDirectory()) {
+          System.out.println(s[i] + " 是一个目录");
+        } else {
+          System.out.println(s[i] + " 是一个文件");
+        }
+      }
+    } else {
+      System.out.println(dirname + " 不是一个目录");
+    }
+  }
+}
+~~~
+
+以上实例编译运行结果如下：
+>目录 /tmp
+>bin 是一个目录
+>lib 是一个目录
+>demo 是一个目录
+>test.txt 是一个文件
+>README 是一个文件
+>index.html 是一个文件
+>include 是一个目录
+
+#### 删除目录或文件
+
+删除文件可以使用 **java.io.File.delete()** 方法。
+
+以下代码会删除目录/tmp/java/，即便目录不为空。
+
+测试目录结构：
+
+	/tmp/java/
+	|-- 1.log
+	|-- test
+
+~~~java
+//DeleteFileDemo.java
+import java.io.File;
+ 
+public class DeleteFileDemo {
+  public static void main(String args[]) {
+      // 这里修改为自己的测试目录
+    File folder = new File("/tmp/java/");
+    deleteFolder(folder);
+  }
+ 
+  //删除文件及目录
+  public static void deleteFolder(File folder) {
+    File[] files = folder.listFiles();
+        if(files!=null) { 
+            for(File f: files) {
+                if(f.isDirectory()) {
+                    deleteFolder(f);
+                } else {
+                    f.delete();
+                }
+            }
+        }
+        folder.delete();
+    }
+}
+~~~
+
+## 对象序列化
 
 Java是一种面向对象的语言，因而对象的永久存储是非常重要的。
 在实际问题中，经常需要保存对象的信息，在需要的时候，再读取这个对象，这就是对象序列化。
@@ -780,15 +1152,20 @@ FileInputStream fi=new FileInputStream("data.ser");
 　　{System.out.println(e);} 
 ~~~
 
+
 ---
 
-#异常处理
+# 异常处理
 
 
-##什么是异常
+## 什么是异常
 
 - 异常就是在程序的运行过程中所发生的意外事件，它中断指令的正常执行。
 - Java中提供了一种独特的处理异常的机制，通过异常来处理程序设计中出现的异常。
+
+比如说，
+- 你的代码少了一个分号，那么运行出来结果是提示是错误 **java.lang.Error**；
+- 如果你用**System.out.println(11/0)**，那么你是因为你用$0$做了除数，会抛出 **java.lang.ArithmeticException** 的异常。
 
 异常发生的原因有很多，通常包含以下几大类：
 
@@ -799,7 +1176,7 @@ FileInputStream fi=new FileInputStream("data.ser");
 这些异常有的是因为用户错误引起，有的是程序错误引起的，还有其它一些是因为物理错误引起的。
 
 
-##为何使用异常处理
+## 为何使用异常处理
 
 如：有程序是处理文件，这个流程中充满了异常可能。
 
@@ -882,14 +1259,14 @@ readFile {//结构清楚，无需自己判断，代码量小。
 }
 ~~~
 
-##使用异常处理的优点:
+## 使用异常处理的优点:
 
 - 使用Java异常处理机制，把错误代码从常规代码中分离出来，结构清楚，无须自己判断，克服了传统方法的错误信息有限等问题。
 - 此外，Java通过面向对象的方法进行异常处理，把各种不同的异常进行分类，并进行分组管理，从而可用专门的方法处理某个异常，也可用通用的方法处理一类异常。
 - 异常处理还有一个好处是当不能确定和处理异常时，可以不予处理，而把问题提交上去。
 
 
-##异常类的层次结构
+## 异常类的层次结构
 
 在Java语言中，每个包中都定义了异常类，而所有的异常类都直接或间接地继承于java.lang.Throwable类。
 
@@ -901,11 +1278,11 @@ readFile {//结构清楚，无需自己判断，代码量小。
 
 <!---![](fig/ExceptionLayers.jpg)--->
 
-###Error
+### Error
 错误Error类指的是系统错误或运行环境出现的错误，这些错误一般是很严重的错误，即使捕捉到也无法处理(错误不是异常，而是脱离程序员控制的问题; 错误在代码中通常被忽略)，由Java虚拟机生成并抛出，包括系统崩溃、动态链接失败、虚拟机错误等，在Java程序中不做处理。 
 例如，当栈溢出时，一个错误就发生了，它们在编译也检查不到的。
 
-###Exception 
+### Exception 
 异常Exception类则是指一些可以被捕获且可能恢复的异常情况，是一般程序中可预知的问题。
 
 异常可分为两类：
@@ -915,11 +1292,18 @@ readFile {//结构清楚，无需自己判断，代码量小。
 
 - __检查性异常__：最具代表的检查性异常是用户错误或问题引起的异常，这是程序员无法预见的。例如要打开一个不存在文件时，一个异常就发生了，这些异常在编译时不能被简单地忽略。
 
+所有的异常类是从 **java.lang.Exception** 类继承的子类。
+Exception 类是 Throwable 类的子类。除了Exception类外，Throwable还有一个子类Error 。
+Java 程序通常不捕获错误。错误一般发生在严重故障时，它们在Java程序处理的范畴之外。
+Error 用来指示运行时环境发生的错误。
+例如，JVM 内存溢出。一般地，程序不会从错误中恢复。
+异常类有两个主要的子类：IOException 类和 RuntimeException 类。
+
 异常类有两个主要的子类：__IOException__类和__RuntimeException__类。
 
 ![](fig/Error.png)
 
-####Exception类的构造方法
+#### Exception类的构造方法
 
 Exception类有两种构造方法：
 
@@ -932,7 +1316,7 @@ Exception类有两种构造方法：
 Exception myExp=new Exception(“异常！”);
 ~~~
 
-####常用方法
+#### 常用方法
 Exception类的方法均继承自Throwable类，可以为程序提供一些有关异常的信息，常用方法如下：
 
 - String getMessage() ：返回该异常所存储的描述性字符串，即返回关于发生的异常的详细信息。这个消息在Throwable 类的构造函数中初始化了。
@@ -952,12 +1336,16 @@ System.out.println(myExp.getMessage());
 此语句可以将异常对象myExp的异常信息描述打印输出，在屏幕上显示“异常！”。 
 
 
-####自定义异常类
+#### 自定义异常类
 
 在Java程序中，可以创建自定义的异常类。
 
 - 用户定义的异常必须继承自Throwable或Exception类,建议用Exception类.
 - 用户定义的异常同样要用try--catch捕获,但必须由用户自己抛出 throw new MyException.
+
+	所有异常都必须是 Throwable 的子类。
+	如果希望写一个检查性异常类，则需要继承 Exception 类。
+	如果你想写一个运行时异常类，那么需要继承 RuntimeException 类。
 
 可按照下面的方法自定义一个异常类：
 
@@ -1001,7 +1389,7 @@ public class InsufficientFundsException extends Exception
 ~~~
 
 
-##异常的处理机制
+## 异常的处理机制
 
 每当Java程序运行过程中发生一个可识别的运行错误时，即该错误有一个异常类与之相对应时，系统都会产生一个相应的该异常类的对象，即产生一个异常。
 
@@ -1015,7 +1403,7 @@ Java中处理异常有两种方式：
 也就是将异常向外转移，即将异常抛出方法之外，由调用该方法的环境去处理。
 
 
-###捕获异常
+### 捕获异常
 
 - 当Java运行时系统得到一个异常对象时，它将会沿着方法的调用栈逐层回溯，寻找处理这一异常的代码。
 - 找到能够处理这种类型的异常的方法后，运行时系统把当前异常对象交给这个方法进行处理，这一过程称为捕获(catch)异常。
@@ -1065,10 +1453,10 @@ public class ExcepTest{
 
 
 
-####try
+#### try
 捕获异常的第一步是用try{…}选定捕获异常的范围，try模块中的语句是程序正常流程要执行的语句，但是在执行过程中有可能出现异常。所有可能抛出异常的语句都放入try模块中。
 
-####catch(必有)
+#### catch(必有)
 每个try代码块可以伴随一个或多个catch语句，用于处理try代码块中所生成的异常事件。catch语句只需要一个形式参数指明它所能够捕获的异常类型,这个类必须是Throwable的子类,运行时系统通过参数值把被抛弃的异常对象传递给catch块。<br>
 在catch块中是对异常对象进行处理的代码，与访问其它对象一样，可以访问一个异常对象的数据成员或调用它的方法。<br>
 getMessage( )是类Throwable所提供的方法，用来得到有关异常事件的信息，类Throwable还提供了方法printStackTrace( )用来跟踪异常事件发生时执行堆栈的内容。<br>
@@ -1109,7 +1497,7 @@ try
 ~~~
 
 
-####finally(可选)
+#### finally(可选)
 捕获异常的最后一步是通过finally语句为异常处理提供一个统一的出口，使得在控制流转到程序的其它部分以前，能够对程序的状态作统一的管理。<br>
 不论在try代码块中是否发生了异常事件，finally块中的语句都会被执行。
 ~~~java
@@ -1153,7 +1541,7 @@ public class ExcepTest{
 - try, catch, finally块之间不能添加任何代码。
 
 
-###常见的异常
+### 常见的异常
 
 - ArithmeticException
 - ArrayIndexOutOfBandsException
@@ -1168,9 +1556,9 @@ public class ExcepTest{
 如果在使用能够产生异常的方法而没有捕获和处理，将不能通过编译
 
 
-###声明抛出异常
+### 声明抛出异常
 
-####抛出异常
+#### 抛出异常
 
 在Java程序的执行过程中，如果出现了异常事件，就会生成一个异常对象。<br>
 生成的异常对象将传递给Java运行时系统，这一异常的产生和提交过程称为抛出(throw)异常。 
@@ -1192,7 +1580,7 @@ throw new String("want to throw");
 ~~~
 
 
-####声明抛出异常
+#### 声明抛出异常
 
 一个方法不处理它产生的异常,而是沿着调用层次向上传递,由调用它的方法来处理这些异常,叫声明抛出异常（throws）。<br>
 声明抛出异常是一种消极的异常处理机制。 
@@ -1260,7 +1648,7 @@ public class className
 
 
 
-###对异常处理的进一步讨论
+### 对异常处理的进一步讨论
 
 - （1）对Error类或其子类的对象，程序中不必进行处理。<br>
 - （2）对RuntimeException类或其子类，程序中可以不必进行处理。<br>
@@ -1273,7 +1661,7 @@ public class className
 - （6）不要过分细分异常。
 
 
-###练习：
+# 练习：
 
 -  1．什么是Java异常？解释抛出、捕获异常的含义。
 -  2．简述Java的异常处理机制。

@@ -1,12 +1,13 @@
+
 ---
 title : Java 语言概述
 ---
 
-#Java语言概述
-
 [TOC]
 
-##什么是 Java? 
+# Java语言概述
+
+## 什么是 Java? 
 Java是由Sun Microsystems在1995年首先发布的编程语言和计算平台。
 Java快速、安全、可靠。从笔记本电脑到数据中心，从游戏控制台到科学超级计算机，从手机到互联网，Java 无处不在！
 
@@ -18,15 +19,19 @@ Java在全球各地有超过$900$万的开发人员，使您能够高效地开�
 - 全球有$900$万Java 开发人员
 - 开发人员的头号选择
 - 排名第一的部署平台
+- __Android系统__
+- __Hadoop MapReduce__
+
+<!---
 - 有$30$亿部移动电话运行Java
 - $100\%$的蓝光盘播放器附带了Java
 - 有$50$亿张Java卡在使用
 - $1.25$亿台TV设备运行Java
 - 前$5$个原始设备制造商均提供了Java ME
+--->
 
 
-
-##产生
+## 简史
 
 - __名字的来源__：Java是印度尼西亚爪哇岛的英文名称，因盛产咖啡而闻名。 
 
@@ -36,6 +41,10 @@ Java在全球各地有超过$900$万的开发人员，使您能够高效地开�
 
 - __标识__: 一杯正冒着热气的咖啡。<br>
 <img src="fig/Java.png" alt="Forward and Backward" width="360">
+
+    Java语言其实是有个曾用名叫Oak，而且起这个名字的时候也是很随心的，只是因为看到了窗口外的一颗橡树（只是因为面向窗外多看了你一眼~），所以就叫为Oak，但Oak这个名字已经被注册。最后他们以Java这个名字命名了这个语言，据说是Sun公司的程序猿们都很喜欢喝咖啡，而且对爪哇岛的一种咖啡印象很深，所以就有了Java这个经典的名字和咖啡的图标。
+
+    "I named Java," said Kim Polese, then the Oak product manager and now CEO of Marimba Inc. "I spent a lot of time and energy on naming Java because I wanted to get precisely the right name. I wanted something that reflected the essence of the technology: dynamic, revolutionary, lively, fun. Because this programming language was so unique, I was determined to avoid nerdy names. I also didn't want anything with 'Net' or 'Web' in it, because I find those names very forgettable. I wanted something that was cool, unique, and easy to spell and fun to say.yin'yong
 
 - 发展历史： 
 
@@ -67,7 +76,7 @@ Java编程语言的共同创始人之一，一般公认他为“Java之父”。
 <!--Scott McNealy（司考特·麦克尼利）-->
 
 
-##为何选择Java
+## 为何选择Java
 
 - Java已由专业的 Java 开发人员、设计师和爱好者团体进行测试、完善、扩展和验证。
 -  Java 旨在竭尽所能为最广泛的计算平台开发可移植的高性能应用程序。通过使应用程序在异构环境之间可用，企业可以提供更多的服务，提高最终用户生产力并加强沟通与协作，从而显著降低企业和消费类应用程序的拥有成本。
@@ -83,10 +92,10 @@ Java编程语言的共同创始人之一，一般公认他为“Java之父”。
 SUN对Java语言的解释是：<mark>Java编程语言是个简单、面向对象、分布式、解释性、健壮、安全与系统无关、可移植、高性能、多线程和动态的语言</mark>
 
 
-##语言的特点
+## 语言的特点
 
 - 1、__简单__<br>
-Java语言的语法与C和C++语言很接近，使得大多数程序员很容易学习和使用Java。另一方面，Java丢弃了C++ 中很少使用的、很难理解的、令人迷惑的那些特性，如操作符重载、多继承、自动的强制类型转换。特别地，Java语言不使用指针，并提供了自动的垃圾回收机制，使得程序员不必为内存管理而担忧。
+Java语言的语法与C和C++语言很接近，使得大多数程序员很容易学习和使用Java。另一方面，Java丢弃了C++ 中很少使用的、很难理解的、令人迷惑的那些特性，如操作符重载、多继承、自动的强制类型转换。特别地，__Java语言不使用指针，并提供了自动的垃圾回收机制，使得程序员不必为内存管理而担忧__。
 
 - 2、__面向对象__<br>
 Java语言提供类、接口和继承等原语，为了简单起见，只支持类之间的单继承，但支持接口之间的多继承，并支持类与接口之间的实现机制（关键字为implements）。Java语言全面支持动态绑定，而C++ 语言只对虚函数使用动态绑定。总之，Java语言是一个纯的面向对象程序设计语言。
@@ -95,7 +104,8 @@ Java语言提供类、接口和继承等原语，为了简单起见，只支持�
 Java语言支持Internet应用的开发，在基本的Java应用编程接口中有一个网络应用编程接口（java.net），它提供了用于网络应用编程的类库，包括URL、URLConnection、Socket、 ServerSocket等。Java的RMI(远程方法激活)机制也是开发分布式应用的重要手段。 
 
 - 4、__健壮__<br>
-Java的强类型机制、异常处理、自动垃圾回收等是Java程序健壮性的重要保证。对指针的丢弃是Java的明智选择。Java的安全检查机制使得Java更具健壮性。
+Java的强类型机制、异常处理、自动垃圾回收等是Java程序健壮性的重要保证。对指针的丢弃是Java的明智选择。Java的安全检查机制使得Java更具健壮性。
+
 - 5、__安全__<br>
 Java通常被用在网络环境中，为此，Java提供了一个安全机制以防恶意代码的攻击。除了Java语言具有的许多安全特性以外，Java对通过网络下载的类具有一个安全防范机制（类ClassLoader），并提供安全管理机制（类SecurityManager）让Java应用设置安全哨兵。 
 
@@ -112,14 +122,18 @@ Java程序（后缀为java的文件）在Java平台上被编译为体系结构�
 与那些解释型的高级脚本语言相比，Java的确是高性能的。事实上，Java的运行速度随着JIT(Just-In-Time)编译器技术的发展越来越接近于C++。 
 
 - 10、__多线程__<br>
-在Java语言中，线程是一种特殊的对象，它必须由Thread类或其子（孙）类来创建。
+在Java语言中，线程是一种特殊的对象，它必须由Thread类或其子（孙）类来创建。通常有两种方法来创建线程：其一，使用型构为Thread(Runnable)的构造子将一个实现了Runnable接口的对象包装成一个线程，其二，从Thread类派生出子类并重写run方法，使用该子类创建的对象即为线程。值得注意的是Thread类已经实现了Runnable接口，因此，任何一个线程均有它的run方法，而run方法中包含了线程所要运行的代码。线程的活动由一组方法来控制。Java语言支持多个线程的同时执行，并提供多线程之间的同步机制（关键字为synchronized）。
 
 - 11、__动态__<br>
 Java语言的设计目标之一是适应于动态变化的环境。Java程序需要的类能够动态地被载入到运行环境，也可以通过网络来载入所需要的类。这也有利于软件的升级。另外，Java中的类有一个运行时刻的表示，能进行运行时刻的类型检查。
 
 
 
-##与C/C++语言的异同
+## 学习过程
+
+![](fig/LearningJAVA.png)
+
+## 与C/C++语言的异同
 
 ### 类似
 - Java编程语言的风格十分接近C++语言。
@@ -139,19 +153,19 @@ Java语言的设计目标之一是适应于动态变化的环境。Java程序需
 
 <img src="fig/CDevPro.png" alt="Forward and Backward" width="620">
 
-##运行环境与开发环境
+## 运行环境与开发环境
 
 <img src="fig/JavaRun.png" alt="Forward and Backward" width="620">
 
 
-###JRE(Java Runtime Environment)
+### JRE(Java Runtime Environment)
 如果只想运行别人的Java程序可以只安装Java运行环境(Java Runtime Environment，JRE),
 JRE由Java虚拟机(Java Virtual Machine，JVM)、Java的核心类、以及一些支持文件组成。
 
 不包含开发工具(JDK)--编译器、调试器和其它工具。
 
 
-###Java Virtual Machine(JVM)
+### Java Virtual Machine(JVM)
 - Java虚拟机
 - Java的核心和基础，在java编译器和os平台之间的虚拟处理器。
 - 是一种基于下层的操作系统和硬件平台并利用软件方法来实现的抽象的计算机，可以在上面执行Java的字节码程序。
@@ -166,13 +180,13 @@ JRE由Java虚拟机(Java Virtual Machine，JVM)、Java的核心类、以及一�
 <img src="fig/Javac.png" alt="Forward and Backward" width="580">
 
 
-####Java字节代码运行的两种方式:
+#### Java字节代码运行的两种方式:
 
 － Interpreter(解释方式)
 
 － Just-in-time(即时编译):有代码生成器将字节代码转换成本机的机器代码，然后可以以较高速度执行.
 
-####任务
+#### 任务
 
 － 提供垃圾回收功能
 － 提供运行时环境
@@ -181,7 +195,7 @@ JRE由Java虚拟机(Java Virtual Machine，JVM)、Java的核心类、以及一�
 
 ---
 
-###JDK(Java Development Kit)
+### JDK(Java Development Kit)
 
 JDK(Java Development Kit)是Java语言的软件开发工具包(SDK)。
 
@@ -203,10 +217,10 @@ JDK(Java Development Kit)是Java语言的软件开发工具包(SDK)。
 - Micro Edition，主要用于移动设备、嵌入式设备上的java应用程序，从JDK 5.0开始，改名为Java ME。<br>
 - J2ME(Java 2 Platform Micro Edition)，嵌入式设备及消费类电器版，又称为Java 2 微型版。
 
-没有JDK的话，无法编译Java程序，如果想只运行Java程序，要确保已安装相应的JRE。
+<mark>没有JDK的话，无法编译Java程序，如果想只运行Java程序，要确保已安装相应的JRE。</mark>
 
 
-####JDK的基本组件包括：
+#### JDK的基本组件包括：
 
 - javac – 编译器，将源程序转成字节码
 - jar – 打包工具，将相关的类文件打包成一个文件
@@ -219,7 +233,8 @@ JDK(Java Development Kit)是Java语言的软件开发工具包(SDK)。
 - Jconsole: Java进行系统调试和监控的工具
 
 
-####常用的包
+
+#### 常用的包
 - java.lang： 这个是系统的基础类，比如String等都是这里面的，这个包是唯一一个可以不用引入(import)就可以使用的包。
 - java.io： 这里面是所有输入输出有关的类，比如文件操作等。
 - java.nio：为了完善io包中的功能，提高io包中性能而写的一个新包 ，例如NIO非堵塞应用
@@ -228,9 +243,22 @@ JDK(Java Development Kit)是Java语言的软件开发工具包(SDK)。
 - java.sql： 这个是数据库操作的类，Connection， Statement，ResultSet等。
 - javax.servlet：这个是JSP，Servlet等使用到的类。
 
+###有关Java的专业术语
+
+- **Server JRE （Java SE Runtime Environment）**：服务端使用的 Java 运行环境
+- **SDK（Software Development Kit）**：软件开发工具包，在Java中用于描述1998年~2006年之间的JDK
+- **DAO（Data Access Object）**：数据访问接口，数据访问，顾名思义就是与数据库打交道
+- **MVC（Model View Controller）**：模型(model)－视图(view)－控制器(controller)的缩写，一种软件设计典范，用于组织代码用一种业务逻辑和数据显示分离的方法
+
+
+- **JRE** 与 **Server JRE** 区别:
+
+	Software Developers: JDK (Java SE Development Kit). For Java Developers. Includes a complete JRE plus tools for developing, debugging, and monitoring Java applications.
+Administrators running applications on a server:  Server JRE (Server Java Runtime Environment) For deploying Java applications on servers. Includes tools for JVM monitoring and tools commonly required for server applications, but does not include browser integration (the Java plug-in), auto-update, nor an installer.
+
 ---
 
-###Eclipse
+### Eclipse
 
 一款非常受欢迎的Java开发工具，用它开发Java的人员是最多的。
 <http://www.eclipse.org>
@@ -247,13 +275,13 @@ Eclipse为工具开发商提供了更好的灵活性，使他们能更好地控�
 
 
 
-###Java程序分成三类:
+### Java程序分成三类:
 
 - Application(应用程序)
 - Applet（小应用程序）
 - 特定的程序
 
-####Java Application(应用程序)
+#### Java Application(应用程序)
 
 - 独立的Java程序
 
@@ -267,7 +295,7 @@ public static void main(String[] args) {
 }
 ~~~
 
-####小应用程序－Java Applet
+#### 小应用程序－Java Applet
 
 - 嵌在HTML网页中运行
 - 特定标记
@@ -277,14 +305,14 @@ public static void main(String[] args) {
 ~~~
 - 在Web浏览器中运行(内嵌Java虚拟机)
 
-####特定的程序
+#### 特定的程序
 
 Servlet(服务器端小程序),EJB等
 Servlet是运行在服务器端的小程序，它可以处理客户传来的请求（request），然后传给客户端（response）。
 
 
 
-##“Hello Word!"程序
+## “Hello Word!"程序
 
 ~~~java
 class HelloWorldApp {
@@ -294,7 +322,7 @@ class HelloWorldApp {
 }
 ~~~
 
-###main方法(main Method)
+### main方法(main Method)
 每个Java应用程序==必须有且只能有的一个main方法，它是程序执行的入口，运行时被虚拟机自动执行==
 
 #### main方法的声明格式是固定的，
@@ -307,28 +335,28 @@ class HelloWorldApp {
 #### 文件中必须存在某个类与该文件同名，
 - 且这个类必须包含一个名为__main()__的方法
 
-###Return关键字：
+### Return关键字：
 
 - 1、代表“已经做完，离开此方法”；
 - 2、如果此方法产生了一个值，这个值要放在return语句后面。
 
 <mark>如果不想返回值，可以指示此方法返回void（空）</mark>。
 
-###static关键字
+### static关键字
 当声明一个事物是static时，就意味着这个域或方法不会与包含它的那个类的任何对象实例关联在一起。
 因此，即使从未创建某个类的任何对象，也可以调用其static方法或访问其static域。
 只须将static关键字放在定义之前，就可以将字段或方法设定为static。
 
-####引用static方法：
+#### 引用static方法：
 
 - 1、通过对象引用；
 - 2、通过类名直接引用。
 
-static方法的一个重要用法是:__在不创建任何对象的前提下就可以调用它。__
+static 方法的一个重要用法是:__在不创建任何对象的前提下就可以调用它。__
 这一特点对定义main()方法很重要，这个方法是运行一个应用时的入口点。
 
 
-####引用static变量的方法与引用static方法相似
+#### 引用static变量的方法与引用static方法相似
 
 - 1、通过对象引用；
 - 2、通过类名直接引用。
@@ -336,7 +364,7 @@ static方法的一个重要用法是:__在不创建任何对象的前提下就�
 <mark>使用类名引用static变量是首选方式，不仅强调了变量的static结构，而且还为编译器优化提供了机会。</mark>
 
 
-###常犯的错误
+### 常犯的错误
 
 - 声明一个类的关键字__class__，写成了__Class__，要注意大小写。
 
@@ -359,7 +387,7 @@ static方法的一个重要用法是:__在不创建任何对象的前提下就�
 解释：运行错误。有时即使该类的字节码文件就在当前目录下，也会报这种错误。这种错误的主要原因是由于没有为运行时环境提供正确的类加载说明，详细说明请参阅附录。
 
 
-###编码风格：
+### 编码风格：
 
 - 类名的首字母要大写。
 
@@ -376,9 +404,9 @@ public修饰的类名称必须与包含它的Java源程序文件名一致<br>
 <!--Java程序的基本结构-->
 
 
-##参考资料
+## 参考资料
 
-###书籍
+### 书籍
 - Thinking in Java
 - Java参考大全J2SE 
 - Core Java 2
@@ -387,22 +415,26 @@ public修饰的类名称必须与包含它的Java源程序文件名一致<br>
 
 <!--J2SE 说明文档 http://java.sun.com/javase/6/docs-->
 
+### 程序员的必备站点
+- <https://github.com>
+- <https://stackoverflow.com>
+- 知乎
+- 简书
 
-###搜索引擎
+### 搜索引擎
 - Google
 - Baidu
 - bing
 
-###Java技术论坛
+### Java技术论坛
 - <http://docs.oracle.com/javase/index.html>
 - <http://www.javaworld.com>
 - <http://www.javaeye.com>
 - <http://www.csdn.net>
 
-- <https://github.com>
 
 
-####马士兵java视频教程
+#### 马士兵java视频教程
 从Java的背景知识讲起，包括JDK安装、开发环境搭建到编程基础知识！
 <http://www.bjsxt.com/2014/down_0425/13.html>
 
