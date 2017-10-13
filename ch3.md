@@ -1,33 +1,35 @@
 ---
-title: Java 语言编程基础
+title : Java 语言编程基础
 ---
 
 [TOC]
 
-#程序
+# 程序
 
 - 程序表现为完成某个功能(目标)而编写的指令集合。
 - 构成程序的基本元结构是__顺序__、__分支__和__循环__<br>
 在整体上，程序运行是按照事先编写的指令(语句)从前到后的顺序执行，但在执行的过程中，经常会遇到基于不同条件的决策来执行不同的指令，抑或重复执行事先定义的指令来达到某种目的，但==总体上程序总是顺序执行的==。
 
 
-##Example:
+## Example:
 
 编写一个程序，声明3个整型变量，用来保存$3$个学生的考试分数，计算他们的平均分(float类型)并输出。
 
 <img src="fig/flowsample1.png" alt="Forward and Backward" width="140">
 
-###进一步的
+### 进一步的
 如果某个学生的成绩低于$60$分，则不参与平均分计算。
+
 <img src="fig/flowsample2.png" alt="Forward and Backward" width="380">
 
-###再进一步
+### 再进一步
 如果有$50$个学生的成绩已经保存在一个整型数组中，同样基于上面规则来计算这批学生的平均分。
+
 <img src="fig/flowsample3.png" alt="Forward and Backward" width="380">
 
 
 
-##语句
+## 语句
 在Java编程语言中，==语句是一行由分号(;)终止的代码==，它是一个完整的可执行单元。
 
 例如：
@@ -54,14 +56,14 @@ total = a + b + c +
 - 控制语句
 
 
-###声明语句
+### 声明语句
 
 ~~~java
 int a=0;    //声明了一个整型变量
 Student stu;//声明了一个类型是Student的对象
 ~~~
 
-###表达式语句 
+### 表达式语句 
 
 赋值表达式，自增表达式、方法调用、对象创建都可以和分号一起构成“表达式语句”
 
@@ -74,7 +76,7 @@ Student stu = new Student(“张华”);   //创建一个Student类的实例，�
 ~~~
 
 
-###控制语句
+### 控制语句
 
 对程序语句的执行顺序进行的规定。 有三种结构：
 
@@ -101,7 +103,7 @@ Java与C/C++之间的差别很细微，可归纳为两点：
 goto语句的使用一直是程序设计者争论的话题，这是因为goto语句的使用不仅降低了程序的可读性，而且往往会带来一些不可预测的错误。 
 
 
-###顺序结构
+### 顺序结构
 
 顺序结构是最简单、最基本的结构，在顺序结构内，顺序执行各个语句。
 
@@ -144,13 +146,13 @@ __空语句__、__表达式语句__、__复合语句__是Java程序依次顺序�
 复合语句是指由一对花括号{}括起来的任意数量的语句，有时又称为块语句或组语句。
 
 
-###选择结构
+### 选择结构
 
 Java提供了条件语句在两种或更多的情况做出选择，根据情况执行不同的程序语句；
 
-####if语句 
+#### if语句 
 
-#####简单if语句
+##### 简单if语句
 
 ~~~java
 if (布尔表达式) { 
@@ -163,7 +165,7 @@ if (布尔表达式) {
 - 首先计算布尔表达式的值，若为真true，则执行块内语句，
 - 否则，if语句终止执行，即不执行块内语句而执行if语句后面的其它语句。
 
-#####if-else语句
+##### if-else语句
 
 ~~~java
 if (布尔表达式) {  
@@ -191,7 +193,7 @@ else {
 }
 ~~~
 
-#####if语句的嵌套
+##### if语句的嵌套
 if语句中的任何一个子句可以是任意可执行语句，当然也可以是一条if语句，这种情况称为if语句的嵌套。
 
 当出现if语句嵌套时，不管书写格式如何，else都将与它前面最靠近的未曾配对的if语句相配对，构成一条完整的if语句。
@@ -224,7 +226,7 @@ else {
 ~~~
 
 
-####switch语句
+#### switch语句
 switch语句是多分支选择语句，又称开关语句。
 
  switch语句的一般形式如下：
@@ -251,14 +253,18 @@ switch(表达式) {
 - 在"switch(表达式)"语句中，"表达式"必须与int类型是赋值兼容的；<br>
 byte, short或char类型可被升级；<br>
 不允许使用浮点或long表达式。
+从Java SE 7开始，switch支持字符串类型了，同时 case 标签必须为字符串常量或字面量。
 
-- 每个case语句后的常量表达式必须是与表达式类型兼容的特定的一个常量(它必须为一个常量，而不是变量)。<br>
+- 每个case语句后的常量表达式必须是与表达式类型兼容的特定的一个常量(它必须为一个常量或者字面常量，而不是变量)。<br>
 case语句只是起到一个标号作用，用来查找匹配的入口并从此处开始执行其后的语句序列。<br>
 重复的case值是不允许的。
 
-- 变量或表达式的值不能与任何case值相匹配时，可选缺省符（default）指出了应该执行的程序代码。<br>
+- 当变量或表达式的值与 case 语句的值相等时，那么 case 语句之后的语句开始执行，直到 break 语句出现才会跳出 switch 语句。
+
+- 当变量或表达式的值不能与任何case值相匹配时，可选缺省符（default）指出了应该执行的程序代码。<br>
 如果没有一个case常量与表达式的值相匹配，则执行default语句。<br>
 default 语句一般在switch语句的最后。
+default 分支不需要 break 语句。
 
 - 如果没有break语句作为某一个case代码段的结束句，则程序的执行将继续到下一个case，而不检查case表达式的值。
 
@@ -282,13 +288,13 @@ DECEMBER}
 
 
 
-###循环结构
+### 循环结构
 
 - 循环结构是指在一定条件下反复执行一个语句或程序块的结构。
 - 循环结构也是只有一个入口，一个出口。
 - 根据循环条件的不同，循环结构分为当型循环结构和直到型循环结构两种。
 
-####Java编程语言支持三种循环构造类型：
+#### Java编程语言支持三种循环构造类型：
 __for__, __while__和__do__ ~ __while__循环。
 
 - for和while循环是在执行循环体之前测试循环条件<br>
@@ -296,7 +302,7 @@ __for__, __while__和__do__ ~ __while__循环。
 - do 循环是在执行完循环体之后测试循环条件。<br>
 ==do循环将至少执行一次循环体==。
 
-#####for循环
+##### for循环
 for语句是java语言中使用灵活方便的一种循环语句，它不仅用于循环次数已知的情况，还能用于循环次数预先不能确定只给出循环结束条件的情况。 
 
 for语句的一般形式为： 
@@ -325,7 +331,42 @@ for (int a=1,b=4; a<b; a++,b--) {
 }
 ~~~
 
-使用增强型循环访问数组元素
+Java5 引入了一种主要用于数组的增强型 for 循环。
+
+Java 增强 for 循环语法格式如下:
+
+~~~java
+for(声明语句 : 表达式)
+{
+   //代码句子
+}
+~~~
+
+- **声明语句**：声明新的局部变量，该变量的类型必须和数组元素的类型匹配。其作用域限定在循环语句块，其值与此时数组元素的值相等。
+- **表达式**：表达式是要访问的数组名，或者是返回值为数组的方法。
+
+**实例**
+
+~~~java
+public class Test {
+   public static void main(String args[]){
+      int [] numbers = {10, 20, 30, 40, 50};
+ 
+      for(int x : numbers ){
+         System.out.print( x );
+         System.out.print(",");
+      }
+      System.out.print("\n");
+      String [] names ={"James", "Larry", "Tom", "Lacy"};
+      for( String name : names ) {
+         System.out.print( name );
+         System.out.print(",");
+      }
+   }
+}
+~~~
+
+以及使用增强型循环访问数组元素
 
 ~~~java
 int[] score = new int[5];
@@ -336,7 +377,7 @@ for (int x : score) {
 ~~~
 
 
-#####while循环
+##### while循环
 while语句用来实现“当型”循环结构，即先判断表达式，后执行语句。其一般形式如下：
 
 ~~~java
@@ -358,7 +399,7 @@ while (i < 10) {
 System.out.println("Finally!");
 ~~~
 
-#####do-while循环
+##### do-while循环
 do-while语句用来实现“直到型”循环结构，即先执行循环体，然后判断循环条件是否成立。
 
 其一般形式如下：
@@ -382,7 +423,7 @@ do {
 System.out.println("Finally!"); 
 ~~~
 
-####循环的嵌套
+#### 循环的嵌套
 一个循环体内包含另一个完整的循环结构称为循环的嵌套，内嵌的循环中还可以嵌套循环，这就是多重循环。
 
 ~~~java
@@ -398,9 +439,9 @@ while（循环条件）{
 ~~~
 
 
-####跳转
+#### 跳转
 
-#####break & continue
+##### break & continue
 
 Java中可以用__break__和__continue__两个循环跳转语句进一步控制循环。
 
@@ -482,9 +523,10 @@ outer: for (int i=1; i<10; i++) {
 ~~~
 
 
-#####label(标号)
+##### label(标号)
 
-Label被用来标识循环构造的复合语句。<br>label(标号)是出现在一个语句之前的标识符，标号后面要加一个冒号，定义如下：
+Label被用来标识循环构造的复合语句。<br>
+label(标号)是出现在一个语句之前的标识符，标号后面要加一个冒号，定义如下：
 
 ~~~java
 label: statement;
@@ -508,7 +550,7 @@ loop: while (true) {
 ~~~
 
 
-###return语句、System.exit()方法 
+### return语句、System.exit()方法 
 
 __return__语句用来从当前方法中退出，返回到调用该方法的语句处，并从紧跟该语句的下一条语句继续执行。<br>
 如果在main()方法中执行__return__语句，则使程序执行返回到Java运行系统，因为Java运行系统调用了main()方法。
@@ -518,7 +560,7 @@ __return__语句用来从当前方法中退出，返回到调用该方法的语�
 
 ---
 
-#数组
+# 数组
 
 - 数组是有序数据的集合，是由数目固定、相同类型的元素组成的，用一个统一的数组名和下标来唯一地确定数组中的元素。<br>
 数组的作用在于提供了一种用来处理一组同类型数据的存储和访问机制，因为在实际编程中，你无法为每一个这样的数据声明一个变量。<br>
@@ -533,29 +575,31 @@ __return__语句用来从当前方法中退出，返回到调用该方法的语�
 - 数组的声明、创建和初始化可以分别完成，也可以一次完成。
 
 
-##一维数组
+## 一维数组
 
 具有一个下标的数组称为一维数组。
 
 
-###数组的声明
+### 数组的声明
 
-- 传统方式
+首先必须声明数组变量，才能在程序中使用数组。
+
+- 现代方式(首选的方法)
 
 ~~~java
-int[] score;
-char s[];
-Point p[],q[]; // Point是一个类类型,此处声明了两个数组
-~~~
-
-- 现代方式
-
-~~~
 char[] s;
 Point[] p, q; 
 ~~~
 
-###创建数组
+- 传统方式(效果相同，但不是首选方法)
+
+~~~java
+char s[];
+Point p[],q[]; // Point是一个类类型,此处声明了两个数组
+~~~
+
+
+### 创建数组
 
 数组声明后并不是就可以直接使用了，要想使用必须要实际创建数组，为它分配实际的存储空间，然后才能存储元素。
 
@@ -566,16 +610,32 @@ p = new Point [100];
 
 也可在运行时，用变量表示数组的大小。
 
-~~~
+~~~java
 int[] a;
-int len=10;
-a=new int[len];
+int len = 10;
+a = new int[len];
 ~~~
 
-注意：==数组的大小一旦指定，就不可更改。==
+数组变量的声明，和创建数组可以用一条语句完成
+
+~~~java
+int len = 10;
+int[] a = new int[len];;
+~~~
+
+还可以使用如下的方式创建数组
+
+~~~java
+int[] a = {0, 1, ..., 100};
+~~~
+
+**注意**：
+
+- ==数组的大小一旦指定，就不可更改。==
+- 数组的元素是通过索引访问的。数组索引从 0 开始，所以索引值从 0 到数组length-1。
 
 
-###初始化数组
+### 初始化数组
 
 预防没有赋值就访问数组元素导致意外的情况。
 
@@ -598,7 +658,7 @@ int[] intArray={1,2,3,4}; // 定义了一个含有4个元素的int型数组
 
 
 
-####动态初始化：用运算符new为数组分配空间
+#### 动态初始化：用运算符new为数组分配空间
 
 ① 对于简单类型的数组，其格式如下：
 
@@ -618,7 +678,7 @@ int[] intArray={1,2,3,4}; // 定义了一个含有4个元素的int型数组
 数组名=new 数据类型[arraySize];
 ~~~
 
-####当创建一个数组时，每个元素都将被默认初始化。
+#### 当创建一个数组时，每个元素都将被默认初始化。
 
 - char数组中，每个值都被初始化为$0$(\u0000-null)字符；
 - 数值类型的数组元素默认值为$0$
@@ -626,7 +686,7 @@ int[] intArray={1,2,3,4}; // 定义了一个含有4个元素的int型数组
 - 对象类型的数组元素默认值为null<br>
 
 
-####Java编程语言允许使用下列形式快速创建数组,并完成初始化任务:
+#### Java编程语言允许使用下列形式快速创建数组,并完成初始化任务:
 
 ~~~java
 String names[] = {
@@ -646,7 +706,7 @@ names [1] = “Jen”;
 names [2] = “Simon”;
 ~~~
 
-###访问数组
+### 访问数组
 
 可以通过下标（整数数值或整型变量）来引用数组内的指定位置的元素，下标不能超出数组元素个数。 
 
@@ -662,7 +722,7 @@ public class ArrayAccessDemo {
 } 
 ~~~
 
-####注意：
+#### 注意：
 
 - 在Java编程语言中，==所有数组的下标都从$0$开始==。访问数组元素可以通过下标进行，如a[5]或者a[i].
 - 与C/C++不同的是，Java对数组元素的下标要进行越界检查，以保证访问的安全性。若数组下标越界，Java会抛出java.lang.ArrayIndexOutOfBoundsException异常。
@@ -670,7 +730,7 @@ public class ArrayAccessDemo {
 length是属于数组对象的数据域而不是方法。因此，使用length()会出错，length只有在数组创建后才能访问。创建前，数组的引用是null。
 
 
-####存储元素到数组
+#### 存储元素到数组
 
 ~~~java
 int[] a=new int[10];
@@ -680,7 +740,7 @@ a[7]=8;
 ~~~
 
 
-###main方法中的参数(String[] args)
+### main方法中的参数(String[] args)
 命令行的参数
 
 ~~~java
@@ -693,11 +753,63 @@ public class CommandParameters {
 }
 ~~~
 
+### foreach 循环
+
+JDK 1.5 引进了一种新的循环类型，被称为 foreach 循环或者加强型循环，它能在不使用下标的情况下遍历数组。
+
+**示例**
+显示数组myList中的所有元素：
+
+~~~java
+public class TestArray {
+   public static void main(String[] args) {
+      double[] myList = {1.9, 2.9, 3.4, 3.5};
+ 
+      // 打印所有数组元素
+      for (double element: myList) {
+         System.out.println(element);
+      }
+   }
+}
+~~~
+
+### 数组作为函数的参数
+数组可以作为参数传递给方法。
+
+例如:
+
+~~~java
+public static void printArray(int[] array) {
+  for (int i = 0; i < array.length; i++) {
+    System.out.print(array[i] + " ");
+  }
+}
+~~~
+
+下面例子调用 printArray 方法打印出 3，1，2，6，4 和 2：
+~~~java
+printArray(new int[]{3, 1, 2, 6, 4, 2});
+~~~
+
+### 数组作为函数的返回值
+
+~~~java
+public static int[] reverse(int[] list) {
+  int[] result = new int[list.length];
+ 
+  for (int i = 0, j = result.length - 1; i < list.length; i++, j--) {
+    result[j] = list[i];
+  }
+  return result;
+}
+~~~
 
 
-##多维数组
+
+## 多维数组
 
 Java编程语言没有像其它语言那样提供多维数组，因为一个数组可被声明为具有任何基础类型，所以你可以创建数组的数组(和数组的数组的数组，等等)。 
+
 二维数组
 
 - 如果数组的元素类型也是数组，这种结构就是多维数组。
@@ -705,7 +817,7 @@ Java编程语言没有像其它语言那样提供多维数组，因为一个数�
 - 最常用的二维数组是一个特殊的一维数组，它的每个元素都是一个一维数组，又叫做数组的数组。<br>
 表示矩阵或表格需要使用二维数组。
 
-####二维数组的声明
+#### 二维数组的声明
 
 ~~~java
 int[][] twoDim = new int [4][];
@@ -722,7 +834,7 @@ int[][] twoDim =  new int[4][5];
 ~~~
 
 
-####不规则的多维数组 
+#### 不规则的多维数组 
 
 ~~~java
 int[][] twoDim =  new int[4][];
@@ -733,37 +845,58 @@ twoDim[3] = new int [8];
 ~~~
 
 
-####非法的声明，
+#### 非法的声明，
 
 ~~~java
 new int [][4]
 ~~~
+
 编译器无法预先为之分配空间。 
 
 
 
-####多维数组的初始化
+#### 多维数组的初始化
 类似一维数组的初始化，多维数组的初始化即可以在声明时直接初始化，也可以在创建时初始化。下面的例子演示了在声明时直接对数组进行初始化：
 
 ~~~java
 int [][] factors = {{2}, {3}, {2, 4}, {5}, {2, 3, 6}, {7}}; 
 ~~~
 
+## Arrays类
+
+java.util.Arrays 类能方便地操作数组，它提供的所有方法都是静态的。
+
+具有以下功能：
+
+- 给数组赋值：通过 fill 方法。
+- 对数组排序：通过 sort 方法,按升序。
+- 比较数组：通过 equals 方法比较数组中元素值是否相等。
+- 查找数组元素：通过 binarySearch 方法能对排序好的数组进行二分查找法操作。
+
+具体说明请查看下表：
+
+序号|方法|说明
+---|:---|:---
+1|public static int binarySearch(Object[] a, Object key)| 用二分查找算法在给定数组中搜索给定值的对象(Byte,Int,double等)。数组在调用前必须排序好的。如果查找值包含在数组中，则返回搜索键的索引；否则返回 (-(插入点) - 1)。
+2|public static boolean equals(long[] a, long[] a2)| 如果两个指定的 long 型数组彼此相等，则返回 true。如果两个数组包含相同数量的元素，并且两个数组中的所有相应元素对都是相等的，则认为这两个数组是相等的。换句话说，如果两个数组以相同顺序包含相同的元素，则两个数组是相等的。同样的方法适用于所有的其他基本数据类型（Byte，short，Int等）。
+3|public static void fill(int[] a, int val)| 将指定的 int 值分配给指定 int 型数组指定范围中的每个元素。同样的方法适用于所有的其他基本数据类型（Byte，short，Int等）。
+4|public static void sort(Object[] a)| 对指定对象数组根据其元素的自然顺序进行升序排列。同样的方法适用于所有的其他基本数据类型（Byte，short，Int等）。
 
 
-#字符串
+
+# 字符串
 
 - 字符串是多个字符的序列，是编程中常用的数据类型。 
 
 - 在纯面向对象的Java语言中，将字符串数据类型封装为字符串类，无论是字符串常量还是字符串变量，都是用类的对象来实现的，在对象中封装了一系列方法来进行字符串处理。 
 
 
-##String类
+## String类
 
 ==一个字符串常量使用双引号括住的一串字符==，字符常量是用单引号括住的一个字符。
 一个字符串常量是一个String对象，故可以使用String类中的各种方法。
 
-注意：
+**注意**：
 
 若Java程序中多处出现字符串常量如"ABC"，则Java编译程序只创建一个String对象，所有的字符串常量"ABC"将使用同一个String对象。如：
 
@@ -776,7 +909,7 @@ String s3=new String("ABC");
 上述三条语句创建了三个对象，其中s1和s2是同一个对象，而s1和s3是2个不同的对象，尽管它们所表示的字符序列相等。
 
 
-###String类的构造方法
+### String类的构造方法
 
 String类中提供了多种构造方法来创建String类的对象。 
 
@@ -803,7 +936,7 @@ public String(char value[],int offset,int count)
 ~~~java
 public String(byte ascII[])
 ~~~
-用byte型字符串数组ascII，按缺省的字符编码方案创建字符串对象。
+用byte型字符串数组ASCII，按缺省的字符编码方案创建字符串对象。
 
 ~~~java
 public String(byte ascII[]，int offset int count))
@@ -816,7 +949,7 @@ public String(StringBuffer buffer)
 用缓冲字符串buffer创建一个字符串对象。
 
 
-###String类的常用成员方法 
+### String类的常用成员方法 
 
 创建一个String类的对象后，使用相应类的成员方法对创建的对象进行处理。
 
@@ -840,7 +973,7 @@ n2=tom.length();            // n2的值5
 n3=”我的爱好”.length();      //n3值是4
 ~~~
 
-####字符串比较
+#### 字符串比较
 
 字符串比较的方法有equals()、equalsIgnoreCase()、startsWith(),endsWith()、regionMatches()、compareTo(),compareToIgnoreCase()等方法
 
@@ -874,7 +1007,7 @@ Jerry=new String(“abc”);
 tom.equalsIgnoreCase(Jerry)的值是true。
 ~~~
 
-#####startsWith、endsWith方法
+##### startsWith、endsWith方法
 字符串对象调用
 
 ~~~java
@@ -905,7 +1038,7 @@ tom.endsWith("021")的值是true
 jerry.endsWith("021")的值是false.
 
 
-#####例
+##### 例
 通过学号判断某学生是否是2004级的男生。
 
 假设某学生学号为“200400581”，前4位为学号，最后1位为性别标志位，0表示女生，1表示男生。
@@ -928,7 +1061,7 @@ public class StringStart{
 程序的运行结果如下：
 >该生是2004级男学生。 
 
-#####regionMatches方法
+##### regionMatches方法
 该方法的申明格式为：
 
 ~~~java
@@ -948,7 +1081,7 @@ public boolean regionMatches(boolean b,int firstStart,String other,int ortherSta
 ==注意，字符串的位置编号从0开始。==
 
 
-#####compareTo,compareToIgnoreCase方法
+##### compareTo,compareToIgnoreCase方法
 String类中中compareTo和compareToIgnoreCase方法申明的格式为：
 
 ~~~java
@@ -973,7 +1106,7 @@ str.compareTo(“abcde”)；  //等于0
 按辞典序比较两个字符串还可以使用compareToIgnoreCase(String s)方法, 该方法忽略大小写
 
 
-####字符串检索
+#### 字符串检索
 
 搜索指定字符或字符串在字符串中出现的位置，用于字符或字符串在字符串中的定位。方法申明格式如下：
 
@@ -1011,7 +1144,7 @@ public int lastIndexOf(String str,int fromIndex)
 - 如果没有检索到字符或字符串,该方法返回的值是-1。
 
 
-####字符串的截取
+#### 字符串的截取
 
 在字符串中截取子字符串，其申明格式如下：
 
@@ -1035,7 +1168,7 @@ String strNewl=strSource.substring(5); // strNew1=”is interesting”
 String strNew2 =strSource.substring(5,6); // strNew2=”i”
 ~~~
 
-####字符串的替换
+#### 字符串的替换
 
 在String类中字符串替换的申明格式如下：
 
@@ -1068,7 +1201,7 @@ String temp=s.trim();               //结果是"I am a student"
 ~~~
 
 
-####类型转换
+#### 类型转换
 
 - String类的静态方法valueOf()实现简单数据转化为字符串。
 
@@ -1142,14 +1275,70 @@ float  ffPI=dpi.floatValue();
 其方法声明格式如下：
 
 ~~~java
-static boolean parseBoolean(String s)
-static int parseInt(String s[, int radix]) 
-static byte parseByte(String s) static double parseDouble(String s)          ……
-static float	parseFloat(String s) 
+static boolean parseBoolean(String s)
+static int parseInt(String s[, int radix]) 
+static byte parseByte(String s) static double parseDouble(String s)          ……
+static float	parseFloat(String s) 
 ~~~
 
 
+## StringBuffer 和 StringBuilder 类
 
+- 当对字符串进行修改的时候，需要使用 StringBuffer 和 StringBuilder 类。
+
+- 和 String 类不同的是，StringBuffer 和 StringBuilder 类的对象能够被多次的修改，并且不产生新的未使用对象。
+	String 是被 final 修饰的，他的长度是不可变的，就算调用 String 的concat 方法，那也是把字符串拼接起来并重新创建一个对象，把拼接后的 String 的值赋给新创建的对象，
+	StringBuffer 的长度是可变的，调用StringBuffer 的 append 方法，来改变 StringBuffer 的长度，并且，相比较于 StringBuffer，String 一旦发生长度变化，是非常耗费内存的！
+
+- StringBuilder 类在 Java 5 中被提出，它和 StringBuffer 之间的最大不同在于 StringBuilder 的方法不是线程安全的（不能同步访问）。
+
+- 由于 StringBuilder 相较于 StringBuffer 有速度优势，所以多数情况下建议使用 StringBuilder 类。然而在应用程序要求线程安全的情况下，则必须使用 StringBuffer 类。
+
+~~~java
+public class Test{
+  public static void main(String args[]){
+    StringBuffer sBuffer = new StringBuffer("stackoverflow官网：");
+    sBuffer.append("https://");
+    sBuffer.append(".stackoverflow");
+    sBuffer.append(".com");
+    System.out.println(sBuffer);  
+  }
+}
+~~~
+
+以上实例编译运行结果如下：
+>stackoverflow官网：https://stackoverflow.com
+
+
+### StringBuffer 方法
+
+序号|方法|描述
+---|---|---
+1|public StringBuffer append(String s)|将指定的字符串追加到此字符序列。
+2|public StringBuffer reverse()|将此字符序列用其反转形式取代。
+3|public delete(int start, int end)|移除此序列的子字符串中的字符。
+4|public insert(int offset, int i)|将 int 参数的字符串表示形式插入此序列中。
+5|replace(int start, int end, String str)|使用给定 String 中的字符替换此序列的子字符串中的字符。
+
+### 与String 方法类似
+
+序号|方法|描述
+---|:---|:---
+1|int capacity()|返回当前容量。
+2|char charAt(int index)|返回此序列中指定索引处的 char 值。
+3|void ensureCapacity(int minimumCapacity)|确保容量至少等于指定的最小值。
+4|void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin)|将字符从此序列复制到目标字符数组 dst。
+5|int indexOf(String str)|返回第一次出现的指定子字符串在该字符串中的索引。
+6|int indexOf(String str, int fromIndex)|从指定的索引处开始，返回第一次出现的指定子字符串在该字符串中的索引。
+7|int lastIndexOf(String str)|返回最右边出现的指定子字符串在此字符串中的索引。
+8|int lastIndexOf(String str, int fromIndex)|返回最后一次出现的指定子字符串在此字符串中的索引。
+9|int length()| 返回长度（字符数）。
+10|void setCharAt(int index, char ch)|将给定索引处的字符设置为 ch。
+11|void setLength(int newLength)|设置字符序列的长度。
+12|CharSequence subSequence(int start, int end)|返回一个新的字符序列，该字符序列是此序列的子序列。
+13|String substring(int start)|返回一个新的 String，它包含此字符序列当前所包含的字符子序列。
+14|String substring(int start, int end)|返回一个新的 String，它包含此序列当前所包含的字符子序列。
+15|String toString()|返回此序列中数据的字符串表示形式。
 
 
 <!--
@@ -1193,7 +1382,7 @@ sudo apt-get install ntfs-3g ntfs-config
 -->
 
 
-#正则表达式
+# 正则表达式
 
 - 正则表达式是一个特殊的字符序列，有助于你用一种专门的语法模式来匹配或找到其他字符串或字符串集。
 一个正则表达式就是由普通的字符（例如字符a到z）以及特殊字符（元字符）组成的文字模式，用以描述在查找文字主体时待匹配的一个或多个字符串。
@@ -1240,7 +1429,7 @@ Java正则表达式和Perl的是最为相似的。
 |[\^0-9[a-z]]| 条件限制在非小写0 to 9或a to z范围中一个字符(交集)|
 
 
-###Java正则表达式元字符
+### Java正则表达式元字符
 
 |字符|说明|
 |:---|:---|
@@ -1265,7 +1454,7 @@ Java正则表达式和Perl的是最为相似的。
 - 在元字符前添加反斜杠(\\)
 - 将元字符置于\Q(开始引用)和\E(结束引用)间
 
-###正则表达式量词
+### 正则表达式量词
 
 量词指定了字符匹配的发生次数。
 
@@ -1365,14 +1554,14 @@ public class RegexExamples {
 |Java\|Hello | Java或Hello|
  
 
-##正则表达式类以及应用举例
+## 正则表达式类以及应用举例
 
 Java提供了java.util.regex包来与正则表达式进行模式匹配。
 
 java.util.regex 包主要包含了三个类： __Pattern类__, __Matcher类__, __PatternSyntaxException__
 
 
-###Pattern类
+### Pattern类
 一个 Pattern 对象是正则表达式编译表示。 Pattern 类没有提供公共的构造函数。要创建一个 Pattern 对象，你必须首先调用他的公用静态编译方法来获得 Pattern 对象。这些方法的第一个参数是正则表达式。
 
 Pattern的方法如下：
@@ -1404,7 +1593,7 @@ flag的取值范围如下：
 |Pattern.UNIX_LINES | 在这个模式下，只有'\n'才被认作一行的中止，并且与'.'，'\^'，以及'\$'进行匹配。|
 
 
-###Matcher类
+### Matcher类
 一个 Matcher 对象是用来解释模式和执行与输入字符串相匹配的操作。和 Pattern 类一样 Matcher 类也是没有构造方法的，你需要通过调用 Pattern 对象的 matcher 方法来获得 Matcher 对象。
 
 Matcher方法如下：
@@ -1447,15 +1636,15 @@ Matcher类同时提供了四个将匹配子串替换成指定字符串的方法�
 - appendTail()
 
 
-###PatternSyntaxException
+### PatternSyntaxException
 一个 PatternSyntaxException 对象是一个不被检查的异常，来指示正则表达式中的语法错误。
 
 
 
 
-###应用举例
+### 应用举例
 
-####在字符串包含验证时
+#### 在字符串包含验证时
 
 ~~~java
 //查找以Java开头,任意结尾的字符串
@@ -1476,7 +1665,7 @@ for (int i=0;i<strs.length;i++) {
 } 
 ~~~
 
-####文字替换（首次出现字符）
+#### 文字替换（首次出现字符）
 
 ~~~java
 Pattern pattern = Pattern.compile("正则表达式");
@@ -1507,7 +1696,7 @@ matcher.appendTail(sbr);
 System.out.println(sbr.toString());
 ~~~
 
-####验证是否为邮箱地址
+#### 验证是否为邮箱地址
 
 ~~~java
 String str="ceponline@yahoo.com.cn";
@@ -1516,7 +1705,7 @@ Matcher matcher = pattern.matcher(str);
 System.out.println(matcher.matches());
 ~~~
 
-####去除html标记
+#### 去除html标记
 
 ~~~java
 Pattern pattern = Pattern.compile("<.+?>", Pattern.DOTALL);
@@ -1525,7 +1714,7 @@ String string = matcher.replaceAll("");
 System.out.println(string);
 ~~~
 
-####查找html中对应条件字符串
+#### 查找html中对应条件字符串
 
 ~~~java
 Pattern pattern = Pattern.compile("href=/"(.+?)/"");
@@ -1535,7 +1724,7 @@ if(matcher.find())
 }
 ~~~
 
-####截取http://地址
+#### 截取http://地址
 
 ~~~java
 //截取url
@@ -1549,7 +1738,7 @@ System.out.println(buffer.toString());
 }
 ~~~
         
-####替换指定{}中文字
+#### 替换指定{}中文字
 
 ~~~java
 String str = "Java目前的发展史是由{0}年-{1}年";
@@ -1568,7 +1757,7 @@ public static String replace(final String sourceString,Object[] object) {
 }
 ~~~
 
-####以正则条件查询指定目录下文件
+#### 以正则条件查询指定目录下文件
 
 ~~~java
  //用于缓存文件列表
@@ -1641,6 +1830,8 @@ public static String replace(final String sourceString,Object[] object) {
             output("C://","[A-z|.]*");
         }
 ~~~
+
+
 
 
 因为正则表达式是一个很庞杂的体系，所以我仅例举些入门的概念，更多的请参阅相关书籍及自行摸索。 
