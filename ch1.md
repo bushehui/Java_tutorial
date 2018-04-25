@@ -40,7 +40,7 @@ Java在全球各地有超过$900$万的开发人员，使您能够高效地开�
 <!--Java语言中的许多库类名称，多与咖啡有关，如JavaBeans(咖啡豆)、NetBeans(网络豆)以及ObjectBeans (对象豆)等等。-->
 
 - __标识__: 一杯正冒着热气的咖啡。<br>
-<img src="fig/Java.png" alt="Forward and Backward" width="360">
+<img src="fig/Java.png" alt="Forward and Backward" width="180">
 
     Java语言其实是有个曾用名叫Oak，而且起这个名字的时候也是很随心的，只是因为看到了窗口外的一颗橡树（只是因为面向窗外多看了你一眼~），所以就叫为Oak，但Oak这个名字已经被注册。最后他们以Java这个名字命名了这个语言，据说是Sun公司的程序猿们都很喜欢喝咖啡，而且对爪哇岛的一种咖啡印象很深，所以就有了Java这个经典的名字和咖啡的图标。
 
@@ -60,8 +60,14 @@ Time| Event
 2001年9月24日  | J2EE1.3发布
 2002年2月26日  | J2SE1.4发布，自此Java的计算能力有了大幅提升2004年9月30日  | J2SE1.5发布，更名为Java SE 5
 2006年12月11日 | Java SE 6发布
+2009年12月     | Java EE 6发布
 2011年7月28日  | Java SE 7发布
 2014年3月28日  | Java SE 8发布
+2017年9月21日  | Java SE 9发表
+2018年3月21日  | Java SE 10发表
+
+
+2010年11月，由于Oracle公司对于Java社区的不友善，因此Apache扬言将退出JCP[14]
 
 - 2006年SUN在JavaOne公布Java 开放源代码项目，并推出__OpenJDK__项目。
 
@@ -99,6 +105,8 @@ Java语言的语法与C和C++语言很接近，使得大多数程序员很容易
 
 - 2、__面向对象__<br>
 Java语言提供类、接口和继承等原语，为了简单起见，只支持类之间的单继承，但支持接口之间的多继承，并支持类与接口之间的实现机制（关键字为implements）。Java语言全面支持动态绑定，而C++ 语言只对虚函数使用动态绑定。总之，Java语言是一个纯的面向对象程序设计语言。
+
+ 面向对象是程序设计方法的一种。“面向对象程序设计语言”的核心之一就是开发者在设计软件的时候可以使用自定义的类型和关联操作。__代码和数据的实际集合体叫做“对象”__。<mark>一个对象可以想象成绑定了很多“行为（代码）”和“状态（数据）”的物体。对于数据结构的改变需要和代码进行通信然后操作，反之亦然</mark>。面向对象设计让大型软件工程的计划和设计变得更容易管理，能增强工程的健康度，减少失败工程的数量。
 
 - 3、__分布式__<br>
 Java语言支持Internet应用的开发，在基本的Java应用编程接口中有一个网络应用编程接口（java.net），它提供了用于网络应用编程的类库，包括URL、URLConnection、Socket、 ServerSocket等。Java的RMI(远程方法激活)机制也是开发分布式应用的重要手段。 
@@ -235,13 +243,14 @@ JDK(Java Development Kit)是Java语言的软件开发工具包(SDK)。
 
 
 #### 常用的包
-- java.lang： 这个是系统的基础类，比如String等都是这里面的，这个包是唯一一个可以不用引入(import)就可以使用的包。
+- java.lang： 这个是系统的基础类，比如String等都是这里面的，<mark>这个包是唯一一个可以不用引入(import)就可以使用的包。</mark>
 - java.io： 这里面是所有输入输出有关的类，比如文件操作等。
 - java.nio：为了完善io包中的功能，提高io包中性能而写的一个新包 ，例如NIO非堵塞应用
 - java.net: 这里面是与网络有关的类，比如URL，URLConnection等。
 - java.util： 这个是系统辅助类，特别是集合类Collection，List，Map等。
 - java.sql： 这个是数据库操作的类，Connection， Statement，ResultSet等。
 - javax.servlet：这个是JSP，Servlet等使用到的类。
+
 
 ###有关Java的专业术语
 
@@ -315,10 +324,12 @@ Servlet是运行在服务器端的小程序，它可以处理客户传来的请�
 ## “Hello Word!"程序
 
 ~~~java
-class HelloWorldApp {
-    public static void main(String[] args) {
-        System.out.println("Hello World!"); // Prints the string to the console.
-    }
+public class HelloWorld {
+
+public static void main(String[] args) {
+		
+       System.out.println("Hello, World!");
+	}
 }
 ~~~
 
@@ -391,14 +402,20 @@ static 方法的一个重要用法是:__在不创建任何对象的前提下就�
 
 - 类名的首字母要大写。
 
-- 如果类名由几个单词构成，那么把它们并在一起，其中每个内部单词的首字母都大写。（驼峰风格）
+- 如果类名由几个单词构成，那么把它们并在一起，其中每个内部单词的首字母都大写。如果类名由若干单词组成，那么每个单词的首字母应该大写，例如MyFirstJavaClass。（驼峰风格）
 
-- 变量、方法以及对象引用名称等，编码风格与类风格类似，只是标识符的第一个字母采用小写。
+- 变量、方法以及对象引用名称等，编码风格与类风格类似，只是标识符的第一个字母采用小写。如果方法名含有若干单词，则后面的每个单词首字母大写，例如myFirstJavaMethod。
+
+- 源文件名必须和类名相同。当保存文件的时候，你应该使用类名作为文件名保存（切记Java是大小写敏感的），文件名的后缀为.java。（如果文件名和类名不相同则会导致编译错误）。
+
+- 所有的Java程序由public static void main（String[] args）方法开始执行。
 
 - 注意：<br>
 public修饰的类名称必须与包含它的Java源程序文件名一致<br>
 
-大小写敏感
+大小写敏感：Java是大小写敏感的，这就意味着标识符Hello与hello是不同的。
+
+
 
 
 <!--Java程序的基本结构-->
@@ -433,12 +450,22 @@ public修饰的类名称必须与包含它的Java源程序文件名一致<br>
 - <http://www.csdn.net>
 
 
-
-#### 马士兵java视频教程
+<!--#### 马士兵java视频教程
 从Java的背景知识讲起，包括JDK安装、开发环境搭建到编程基础知识！
 <http://www.bjsxt.com/2014/down_0425/13.html>
 
-<!--http://study.163.com/course/introduction/342010.htm#/courseDetail-->
+http://study.163.com/course/introduction/342010.htm#/courseDetail-->
+
+
+# 练习
+
+## 请简要说明如下名词的含意：
+
+- JRE
+- JDK
+- JVM
+- J2EE
+- 
 
 ---
 

@@ -5,11 +5,11 @@ title : JDBC与数据库访问
 [TOC]
 
 
-#JDBC与数据库访问
+# JDBC与数据库访问
 
-##关系数据库和SQL
+## 关系数据库和SQL
 
-###数据库概述
+### 数据库概述
 
 数据库是一个有组织的数据集合，它由一个或多个表组成。每一个表中都存储了对一类对象的数据描述。
 数据库管理系统（database management system，DBMS）以一种与数据库格式一致的方式，提供了存储和组织数据的机制。
@@ -19,7 +19,7 @@ title : JDBC与数据库访问
 比较著名的关系数据库管理系统有Oracle、Sybase、DB2、MySQL、Microsoft SQL Server等。 
 
 
-###数据库系统
+### 数据库系统
 
 - 数据库系统由数据库、数据库管理软件和应用软件组成
 
@@ -30,20 +30,20 @@ title : JDBC与数据库访问
 ![](fig/dbms2.png)
 
 
-###SQL
+### SQL
 
 SQL是一个国际化标准语言，几乎所有关系型数据库都用SQL语言执行数据查询和操纵。 
 
-####理解SQL语句时要注意几点：
+#### 理解SQL语句时要注意几点：
 
 - SQL语言中的语句都是独立执行的，无上下文联系；
 - 每条语句都有自己的主关键字，语句中可包含若干子句；
 - SQL语句本身不区分大小写。为突出语句格式，下面例子中保留字采用大写。
 
 
-####SQL基本命令
+#### SQL基本命令
 
-#####建表语句
+##### 建表语句
 
 - 格式：
 
@@ -54,7 +54,7 @@ CREATE TABLE table_name （column1 type [not] null,…）
 - 功能：
 在当前数据库中创建一张名为的table_name表格结构。
 
-#####删除表
+##### 删除表
 
 - 格式：
 
@@ -65,7 +65,7 @@ DROP  table_name
 - 功能：
 在当前数据库中删除名为table_name的表。
 
-#####查询语句
+##### 查询语句
 
 - 格式：
 
@@ -83,7 +83,7 @@ LIKE运算符用于带有通配符百分号（%）和下划线（_）的模式�
 SELECT * FROM account WHERE    accountNumber='1280316401' 
 ~~~
 
-#####插入语句
+##### 插入语句
 
 - 格式：
 
@@ -98,7 +98,7 @@ INSERT  INTO table_name 	[(col1，col2，...，coln)] VALUES(v1，v2，...，vn)
 (1)如果所有的列名都未给，则在Values中必须依次给出所有列的值。
 (2)给出的值的类型必须与对应的列的类型相一致。 
 
-#####更新语句
+##### 更新语句
 
 - 格式：
 
@@ -120,7 +120,7 @@ UPDATE account SET accountAmount=accountAmount-200
 WHERE accountNumber =’1280316401’
 ~~~
 
-#####删除语句
+##### 删除语句
 
 - 格式：
 
@@ -144,7 +144,7 @@ DELETE FORM account WHERE accountNumber=’1280316401’
 
 
 
-##JDBC概述
+## JDBC概述
 
 - 类似于Microsoft的ODBC[^1]。
 - JDBC是Java DataBase Connectivity的缩写，它是一种可用于执行SQL语句的Java API，由一组用 Java编写的类和接口组成。
@@ -157,9 +157,9 @@ DELETE FORM account WHERE accountNumber=’1280316401’
 1996年夏，Sun公司推出了Java数据库连接（Java Database Connectivity，JDBC）工具包的第一个版本。 
 
 
-##使用JDBC访问数据库
+## 使用JDBC访问数据库
 
-###JDBC数据库驱动程序的功能是：
+### JDBC数据库驱动程序的功能是：
 
 - 一面用底层协议与数据库服务器进行对话；
 - 一面用JDBC API与用户程序进行对话。
@@ -182,10 +182,10 @@ JDBC驱动程序管理器能够动态地管理和维护数据库查询所需要�
 这里的数据库是指Java程序需要的数据库以及数据库管理系统。 
 
 
-####JDBC驱动程序类型
+#### JDBC驱动程序类型
 JDBC驱动程序按照连接方式的不同可以分为四种类型： 
 
-#####JDBC-ODBC Bridge
+##### JDBC-ODBC Bridge
 将对JDBC的调用转化为ODBC的调用，要求本地机必须安装ODBC驱动程序，然后注册一个ODBC数据源名 。
 
 使用JDBC－ODBC Bridge，JDBC调用最终转化为ODBC调用，应用程序可以通过选择适当的ODBC驱动程序来实现对多个厂商的数据库访问。 
@@ -197,21 +197,21 @@ ODBC不能解决的问题，JDBC－ODBC Bridge也不能解决，比如：Bridge�
 
 ![](fig/jdbc2.png)
 
-#####JDBC-Native API Bridge
+##### JDBC-Native API Bridge
 直接将用户的调用转化为对数据库客户端API的调用，要求本地机必须安装好特定的驱动程序，显然限制了应用程序对其它数据库的使用。
 
 Native API Bridge驱动程序利用客户机上的本地代码库来与数据库进行直接通信。与JDBC-ODBC Bridge一样，这种驱动程序也存在着许多限制。由于它使用的是本地库，因此这些库就必须事先安装在客户机上。 
 
 ![](fig/jdbc3.png)
 
-#####JDBC-MiddleWare
+##### JDBC-MiddleWare
 它是独立于数据库服务器的，它和一个中间件服务器通讯，由中间件负责与数据库通讯。 
 
 这种类型的JDBC驱动程序是4中类型中最灵活的。这种驱动程序通常被用在三层网络解决方案中，并能够被发布到Internet上。这种类型的驱动程序是一种纯Java的驱动程序，它将JDBC调用转换为一种与DBMS独立的网络协议并与某种中间层连接，然后通过中间层，采用第一、第二或第四中驱动程序与数据库通信。这种驱动程序通常由一些与数据库产品无关的公司开发。 
 
 ![](fig/jdbc4.png)
 
-#####Pure JDBC Driver
+##### Pure JDBC Driver
 使用该类型的应用程序无需安装附加的软件，所有对数据库的操作都直接由JDBC驱动程序完成。
 
 这种JDBC驱动程序也是一种纯Java的驱动程序，它通过本地协议直接与数据库引擎相连。有了合适的通信协议，这种驱动程序也能够应用于Internet。该类驱动程序相对于其他类型的驱动程序的优势在于它的性能，在它与数据库引擎和客户机之间没有本地代码层或中间层软件。 
@@ -219,7 +219,7 @@ Native API Bridge驱动程序利用客户机上的本地代码库来与数据库
 ![](fig/jdbc5.png)
 
 
-###JDBC API
+### JDBC API
 
 简单地说，JDBC主要完成下列三项任务： 
 
@@ -232,7 +232,7 @@ Native API Bridge驱动程序利用客户机上的本地代码库来与数据库
 
 ![](fig/jdbcapi.png)
 
-####主要接口
+#### 主要接口
 
 (1) 驱动程序管理器DrvierManager
 用来加载驱动程序，管理应用程序和已注册的驱动程序的连接。
@@ -249,7 +249,7 @@ Native API Bridge驱动程序利用客户机上的本地代码库来与数据库
 (5) 结果集ResultSet	
 负责保存执行查询后返回的数据。
 
-###编写JDBC程序一般步骤
+### 编写JDBC程序一般步骤
 
 import java.sql.*;
 
@@ -434,7 +434,7 @@ while(rs.next())
 con.close();
 ~~~
 
-##使用JDBC访问数据库的示例
+## 使用JDBC访问数据库的示例
 
 ~~~java
 import java.sql.*;
@@ -470,7 +470,7 @@ public class SimpleJdbc {
 
 ~~~
 
-##练习
+## 练习
 
 1．试述JDBC驱动程序有哪几种。
 2．SQL语言包括哪几种基本语句来完成数据库的基本操作？
