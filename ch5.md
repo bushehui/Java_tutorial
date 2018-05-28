@@ -299,7 +299,7 @@ flush( ) 　
 
 - 关闭流
 
-~~~
+~~~java
 close( );
 	//流操作完毕后必须关闭
 ~~~
@@ -321,7 +321,7 @@ close( );
 
 ### InputStream 和 OutputStream 用法的例子
 
-~~~
+~~~java
 import java.io.*;
  
 public class fileStreamTest{
@@ -1087,6 +1087,8 @@ public class DeleteFileDemo {
     }
 }
 ~~~
+
+
 
 ## 对象序列化
 
